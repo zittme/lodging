@@ -1,0 +1,31 @@
+<table name="lodging_property">
+	<column name="property_srl" type="bigint" notnull="notnull" primarykey="primarykey" />
+	<column name="module_srl" type="bigint" notnull="notnull" default="0" index="idx_module_srl" />
+	<!-- 몰인몰 대비. 0 = 자체 운영. 입점 계층이 생기기 전까지는 항상 0 이다. -->
+	<column name="vendor_srl" type="bigint" notnull="notnull" default="0" index="idx_vendor_srl" />
+	<column name="title" type="varchar" size="250" notnull="notnull" />
+	<column name="summary" type="varchar" size="250" />
+	<column name="description" type="text" />
+	<!-- hotel / motel / pension / guesthouse / resort -->
+	<column name="property_type" type="varchar" size="20" notnull="notnull" default="motel" />
+	<column name="address" type="varchar" size="250" />
+	<column name="address_detail" type="varchar" size="250" />
+	<column name="phone" type="varchar" size="40" />
+	<!-- HHMM. 숙박 입실·퇴실 기준 시각 -->
+	<column name="checkin_time" type="char" size="4" notnull="notnull" default="1500" />
+	<column name="checkout_time" type="char" size="4" notnull="notnull" default="1100" />
+	<!-- 편의시설 코드 목록 (JSON 배열) -->
+	<column name="amenities" type="text" />
+	<column name="latitude" type="varchar" size="30" />
+	<column name="longitude" type="varchar" size="30" />
+	<!-- 예약·취소 알림을 받을 주소 (쉼표 구분). 비우면 알림을 보내지 않는다. -->
+	<column name="notify_email" type="varchar" size="250" />
+	<!-- 현장결제 허용 여부. 선결제는 zittme_pay 가 설치된 경우에만 열린다. -->
+	<column name="allow_onsite_pay" type="char" size="1" notnull="notnull" default="Y" />
+	<column name="allow_prepay" type="char" size="1" notnull="notnull" default="Y" />
+	<!-- open: 판매중 / closed: 판매중지 -->
+	<column name="status" type="varchar" size="20" notnull="notnull" default="open" index="idx_status" />
+	<column name="list_order" type="bigint" notnull="notnull" default="0" index="idx_list_order" />
+	<column name="regdate" type="char" size="14" />
+	<column name="last_update" type="char" size="14" />
+</table>

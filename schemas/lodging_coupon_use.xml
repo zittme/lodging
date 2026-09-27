@@ -1,0 +1,8 @@
+<table name="lodging_coupon_use">
+	<column name="use_srl" type="bigint" notnull="notnull" primarykey="primarykey" />
+	<column name="coupon_srl" type="bigint" notnull="notnull" default="0" index="idx_coupon_srl" />
+	<column name="booking_srl" type="bigint" notnull="notnull" default="0" index="idx_booking_srl" />
+	<column name="member_srl" type="bigint" notnull="notnull" default="0" index="idx_member_srl" />
+	<column name="discount_amount" type="bigint" notnull="notnull" default="0" />
+	<column name="regdate" type="char" size="14" />
+</table>

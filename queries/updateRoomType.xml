@@ -1,0 +1,34 @@
+<query id="updateRoomType" action="update">
+	<tables>
+		<table name="lodging_room_type" />
+	</tables>
+	<columns>
+		<column name="title" var="title" />
+		<column name="description" var="description" />
+		<column name="total_rooms" var="total_rooms" filter="number" />
+		<column name="std_person" var="std_person" filter="number" />
+		<column name="max_person" var="max_person" filter="number" />
+		<column name="stay_price_weekday" var="stay_price_weekday" filter="number" />
+		<column name="stay_price_fri" var="stay_price_fri" filter="number" />
+		<column name="stay_price_sat" var="stay_price_sat" filter="number" />
+		<column name="use_dayuse" var="use_dayuse" />
+		<column name="dayuse_hours" var="dayuse_hours" filter="number" />
+		<column name="dayuse_open" var="dayuse_open" />
+		<column name="dayuse_close" var="dayuse_close" />
+		<column name="dayuse_price_weekday" var="dayuse_price_weekday" filter="number" />
+		<column name="dayuse_price_fri" var="dayuse_price_fri" filter="number" />
+		<column name="dayuse_price_sat" var="dayuse_price_sat" filter="number" />
+		<column name="min_nights" var="min_nights" filter="number" />
+		<column name="max_nights" var="max_nights" filter="number" />
+		<column name="extra_person_price" var="extra_person_price" filter="number" />
+		<column name="long_stay_nights" var="long_stay_nights" filter="number" />
+		<column name="long_stay_rate" var="long_stay_rate" filter="number" />
+		<column name="amenities" var="amenities" />
+		<column name="status" var="status" />
+		<column name="list_order" var="list_order" filter="number" />
+		<column name="last_update" var="last_update" notnull="notnull" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="room_type_srl" var="room_type_srl" filter="number" notnull="notnull" />
+	</conditions>
+</query>

@@ -1,0 +1,11 @@
+<query id="getProperty" action="select">
+	<tables>
+		<table name="lodging_property" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="property_srl" var="property_srl" filter="number" notnull="notnull" />
+	</conditions>
+</query>

@@ -1,0 +1,11 @@
+<query id="insertCancelRule" action="insert">
+	<tables>
+		<table name="lodging_cancel_rule" />
+	</tables>
+	<columns>
+		<column name="rule_srl" var="rule_srl" filter="number" notnull="notnull" />
+		<column name="property_srl" var="property_srl" filter="number" notnull="notnull" />
+		<column name="days_before" var="days_before" filter="number" notnull="notnull" />
+		<column name="refund_rate" var="refund_rate" filter="number" notnull="notnull" />
+	</columns>
+</query>

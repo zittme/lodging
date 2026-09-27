@@ -1,0 +1,14 @@
+<query id="insertPoint" action="insert">
+	<tables>
+		<table name="lodging_point" />
+	</tables>
+	<columns>
+		<column name="log_srl" var="log_srl" filter="number" notnull="notnull" />
+		<column name="member_srl" var="member_srl" filter="number" notnull="notnull" />
+		<column name="amount" var="amount" filter="number" notnull="notnull" />
+		<column name="reason" var="reason" notnull="notnull" />
+		<column name="booking_srl" var="booking_srl" filter="number" default="0" />
+		<column name="memo" var="memo" />
+		<column name="regdate" var="regdate" />
+	</columns>
+</query>

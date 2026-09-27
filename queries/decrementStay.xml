@@ -1,0 +1,14 @@
+<query id="decrementStay" action="update">
+	<tables>
+		<table name="lodging_inventory" />
+	</tables>
+	<columns>
+		<column name="booked_stay" var="booked_stay" default="minus(1)" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="room_type_srl" var="room_type_srl" filter="number" notnull="notnull" />
+		<condition operation="equal" column="ymd" var="ymd" notnull="notnull" pipe="and" />
+		<!-- 0 아래로 내려가지 않는다 -->
+		<condition operation="excess" column="booked_stay" default="0" pipe="and" />
+	</conditions>
+</query>

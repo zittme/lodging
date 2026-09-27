@@ -1,0 +1,15 @@
+<table name="lodging_room">
+	<column name="room_srl" type="bigint" notnull="notnull" primarykey="primarykey" />
+	<column name="property_srl" type="bigint" notnull="notnull" default="0" index="idx_property_srl" />
+	<column name="room_type_srl" type="bigint" notnull="notnull" default="0" index="idx_room_type_srl" />
+	<!-- 층. 지하는 음수 (B1 = -1) -->
+	<column name="floor" type="bigint" notnull="notnull" default="1" />
+	<!-- 호수 표기. 예: 301 -->
+	<column name="name" type="varchar" size="40" notnull="notnull" />
+	<!-- 층 그리드에서의 칸 순서 -->
+	<column name="position" type="bigint" notnull="notnull" default="0" />
+	<!-- open: 사용 / closed: 사용 중지 (수리 등) -->
+	<column name="status" type="varchar" size="20" notnull="notnull" default="open" />
+	<column name="memo" type="varchar" size="120" />
+	<index name="idx_property_floor" columns="property_srl,floor,position" />
+</table>

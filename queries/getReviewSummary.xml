@@ -1,0 +1,13 @@
+<query id="getReviewSummary" action="select">
+	<tables>
+		<table name="lodging_review" />
+	</tables>
+	<columns>
+		<column name="count(*)" alias="count" />
+		<column name="avg(score)" alias="average" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="property_srl" var="property_srl" filter="number" notnull="notnull" />
+		<condition operation="equal" column="status" var="status" pipe="and" />
+	</conditions>
+</query>

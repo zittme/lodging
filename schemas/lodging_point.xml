@@ -1,0 +1,9 @@
+<table name="lodging_point">
+	<column name="log_srl" type="bigint" notnull="notnull" primarykey="primarykey" />
+	<column name="member_srl" type="bigint" notnull="notnull" default="0" index="idx_member_srl" />
+	<column name="amount" type="bigint" notnull="notnull" default="0" />
+	<column name="reason" type="varchar" size="20" notnull="notnull" default="admin" />
+	<column name="booking_srl" type="bigint" notnull="notnull" default="0" index="idx_booking_srl" />
+	<column name="memo" type="varchar" size="200" />
+	<column name="regdate" type="char" size="14" index="idx_regdate" />
+</table>

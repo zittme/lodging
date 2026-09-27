@@ -1,0 +1,30 @@
+<query id="getBookingList" action="select">
+	<tables>
+		<table name="lodging_booking" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="module_srl" var="module_srl" filter="number" />
+		<condition operation="equal" column="property_srl" var="property_srl" filter="number" pipe="and" />
+		<condition operation="equal" column="room_type_srl" var="room_type_srl" filter="number" pipe="and" />
+		<condition operation="equal" column="member_srl" var="member_srl" filter="number" pipe="and" />
+		<condition operation="equal" column="status" var="status" pipe="and" />
+		<condition operation="equal" column="stay_type" var="stay_type" pipe="and" />
+		<condition operation="equal" column="checkin_ymd" var="checkin_ymd" pipe="and" />
+		<condition operation="more" column="checkin_ymd" var="start_ymd" pipe="and" />
+		<condition operation="less" column="checkin_ymd" var="end_ymd" pipe="and" />
+		<group pipe="and">
+			<condition operation="like" column="guest_name" var="s_name" />
+			<condition operation="like" column="guest_phone" var="s_phone" pipe="or" />
+			<condition operation="like" column="booking_code" var="s_code" pipe="or" />
+		</group>
+	</conditions>
+	<navigation>
+		<index var="sort_index" default="booking_srl" order="desc" />
+		<list_count var="list_count" default="20" />
+		<page_count var="page_count" default="10" />
+		<page var="page" default="1" />
+	</navigation>
+</query>

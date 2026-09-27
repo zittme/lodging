@@ -1,0 +1,12 @@
+<query id="getCouponWallet" action="select">
+	<tables>
+		<table name="lodging_coupon_wallet" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="wallet_srl" var="wallet_srl" filter="number" notnull="notnull" />
+		<condition operation="equal" column="member_srl" var="member_srl" filter="number" pipe="and" />
+	</conditions>
+</query>

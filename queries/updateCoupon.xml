@@ -1,0 +1,22 @@
+<query id="updateCoupon" action="update">
+	<tables>
+		<table name="lodging_coupon" />
+	</tables>
+	<columns>
+		<column name="title" var="title" />
+		<column name="code" var="code" />
+		<column name="discount_type" var="discount_type" />
+		<column name="discount_value" var="discount_value" filter="number" />
+		<column name="max_discount" var="max_discount" filter="number" />
+		<column name="min_amount" var="min_amount" filter="number" />
+		<column name="apply_to" var="apply_to" />
+		<column name="start_ymd" var="start_ymd" />
+		<column name="end_ymd" var="end_ymd" />
+		<column name="use_limit" var="use_limit" filter="number" />
+		<column name="per_member_limit" var="per_member_limit" filter="number" />
+		<column name="status" var="status" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="coupon_srl" var="coupon_srl" filter="number" notnull="notnull" />
+	</conditions>
+</query>

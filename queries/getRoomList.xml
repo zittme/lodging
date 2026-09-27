@@ -1,0 +1,16 @@
+<query id="getRoomList" action="select">
+	<tables>
+		<table name="lodging_room" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="property_srl" var="property_srl" filter="number" notnull="notnull" />
+		<condition operation="equal" column="floor" var="floor" filter="number" pipe="and" />
+	</conditions>
+	<navigation>
+		<index var="sort_index" default="position" order="asc" />
+		<list_count var="list_count" default="500" />
+	</navigation>
+</query>

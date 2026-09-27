@@ -1,0 +1,45 @@
+@version(2)
+@load('css/lodging.css')
+
+<div class="ldg ldg-narrow">
+	<h2 class="ldg-title">{{ $lang->lodging_my_bookings }}</h2>
+
+	@if($need_auth)
+	<p class="ldg-desc">{{ $lang->lodging_guest_lookup_help }}</p>
+	<form class="ldg-form" action="{{ getUrl() }}" method="post">
+		<input type="hidden" name="module" value="lodging" />
+		<input type="hidden" name="act" value="procLodgingGuestLookup" />
+		<input type="hidden" name="mid" value="{{ $module_info->mid }}" />
+		<div class="ldg-row">
+			<label for="ldg_lookup_code">{{ $lang->lodging_booking_code }}</label>
+			<input type="text" id="ldg_lookup_code" name="booking_code" required />
+		</div>
+		<div class="ldg-row">
+			<label for="ldg_lookup_pw">{{ $lang->lodging_guest_password }}</label>
+			<input type="password" id="ldg_lookup_pw" name="guest_password" required autocomplete="off" />
+		</div>
+		<div class="ldg-actions">
+			<button type="submit" class="ldg-btn ldg-btn-primary">{{ $lang->lodging_lookup }}</button>
+		</div>
+	</form>
+
+	@else
+
+	<ul class="ldg-mylist">
+		@foreach($booking_list as $booking)
+		<li>
+			<a href="{{ getUrl('', 'mid', $module_info->mid, 'act', 'dispLodgingResult', 'code', $booking->booking_code) }}">
+				<span class="ldg-code">{{ $booking->booking_code }}</span>
+				<span class="ldg-status ldg-status-{{ $booking->status }}">{{ $lang->{'lodging_status_' . $booking->status} }}</span>
+				@if($booking->status === 'hold')<span class="ldg-muted">{{ $lang->lodging_hold_short }}</span>@endif
+				<span class="ldg-muted">{{ zdate($booking->checkin_ymd, 'Y.m.d') }} · {{ $booking->stay_type === 'dayuse' ? $lang->lodging_dayuse : $lang->lodging_stay }}</span>
+				<span class="ldg-my-amount">{{ number_format($booking->total_amount) }}{{ $lang->lodging_won }}</span>
+			</a>
+		</li>
+		@endforeach
+		@if(!count($booking_list))
+		<li class="ldg-empty">{{ $lang->lodging_no_booking }}</li>
+		@endif
+	</ul>
+	@endif
+</div>

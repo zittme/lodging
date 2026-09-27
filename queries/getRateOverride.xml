@@ -1,0 +1,13 @@
+<query id="getRateOverride" action="select">
+	<tables>
+		<table name="lodging_rate_override" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="room_type_srl" var="room_type_srl" filter="number" notnull="notnull" />
+		<condition operation="equal" column="stay_type" var="stay_type" notnull="notnull" pipe="and" />
+		<condition operation="equal" column="ymd" var="ymd" notnull="notnull" pipe="and" />
+	</conditions>
+</query>

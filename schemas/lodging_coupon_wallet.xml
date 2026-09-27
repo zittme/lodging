@@ -1,0 +1,9 @@
+<table name="lodging_coupon_wallet">
+	<column name="wallet_srl" type="bigint" notnull="notnull" primarykey="primarykey" />
+	<column name="coupon_srl" type="bigint" notnull="notnull" default="0" index="idx_coupon_srl" />
+	<column name="member_srl" type="bigint" notnull="notnull" default="0" index="idx_member_srl" />
+	<column name="status" type="varchar" size="20" notnull="notnull" default="available" />
+	<column name="booking_srl" type="bigint" notnull="notnull" default="0" index="idx_booking_srl" />
+	<column name="regdate" type="char" size="14" />
+	<column name="used_date" type="char" size="14" />
+</table>

@@ -1,0 +1,18 @@
+<table name="lodging_review">
+	<column name="review_srl" type="bigint" notnull="notnull" primarykey="primarykey" />
+	<column name="property_srl" type="bigint" notnull="notnull" default="0" index="idx_property_srl" />
+	<column name="room_type_srl" type="bigint" notnull="notnull" default="0" />
+	<!-- 이용완료(completed) 예약만 후기를 남길 수 있다. 예약당 1건. -->
+	<column name="booking_srl" type="bigint" notnull="notnull" default="0" />
+	<column name="member_srl" type="bigint" notnull="notnull" default="0" index="idx_member_srl" />
+	<column name="writer_name" type="varchar" size="80" />
+	<!-- 1~5 -->
+	<column name="score" type="bigint" notnull="notnull" default="5" />
+	<column name="content" type="text" />
+	<!-- 업소(운영자) 답글 -->
+	<column name="reply" type="text" />
+	<column name="reply_date" type="char" size="14" />
+	<column name="status" type="varchar" size="20" notnull="notnull" default="public" index="idx_status" />
+	<column name="regdate" type="char" size="14" index="idx_regdate" />
+	<index name="idx_booking_unique" columns="booking_srl" type="unique" />
+</table>

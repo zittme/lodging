@@ -1,0 +1,26 @@
+<table name="lodging_coupon">
+	<column name="coupon_srl" type="bigint" notnull="notnull" primarykey="primarykey" />
+	<column name="module_srl" type="bigint" notnull="notnull" default="0" index="idx_module_srl" />
+	<!-- 0 이면 모든 업소에 적용 -->
+	<column name="property_srl" type="bigint" notnull="notnull" default="0" index="idx_property_srl" />
+	<column name="title" type="varchar" size="250" notnull="notnull" />
+	<!-- 손님이 입력하는 코드. 비우면 코드 없이 자동 노출형. -->
+	<column name="code" type="varchar" size="40" index="idx_code" />
+	<!-- amount: 정액 / rate: 정률 -->
+	<column name="discount_type" type="varchar" size="10" notnull="notnull" default="amount" />
+	<column name="discount_value" type="bigint" notnull="notnull" default="0" />
+	<!-- 정률일 때 최대 할인액. 0 = 제한 없음 -->
+	<column name="max_discount" type="bigint" notnull="notnull" default="0" />
+	<column name="min_amount" type="bigint" notnull="notnull" default="0" />
+	<!-- stay / dayuse / all -->
+	<column name="apply_to" type="varchar" size="10" notnull="notnull" default="all" />
+	<column name="start_ymd" type="char" size="8" />
+	<column name="end_ymd" type="char" size="8" />
+	<!-- 전체 사용 한도. 0 = 무제한 -->
+	<column name="use_limit" type="bigint" notnull="notnull" default="0" />
+	<column name="used_count" type="bigint" notnull="notnull" default="0" />
+	<!-- 1인 사용 한도 -->
+	<column name="per_member_limit" type="bigint" notnull="notnull" default="1" />
+	<column name="status" type="varchar" size="20" notnull="notnull" default="open" index="idx_status" />
+	<column name="regdate" type="char" size="14" />
+</table>

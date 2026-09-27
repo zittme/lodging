@@ -1,0 +1,17 @@
+<query id="updateBookingStatus" action="update">
+	<tables>
+		<table name="lodging_booking" />
+	</tables>
+	<columns>
+		<column name="status" var="status" />
+		<column name="pay_status" var="pay_status" />
+		<column name="cancel_reason" var="cancel_reason" />
+		<column name="canceled_date" var="canceled_date" />
+		<column name="refund_amount" var="refund_amount" filter="number" />
+		<column name="assigned_room_srl" var="assigned_room_srl" filter="number" />
+		<column name="last_update" var="last_update" notnull="notnull" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="booking_srl" var="booking_srl" filter="number" notnull="notnull" />
+	</conditions>
+</query>

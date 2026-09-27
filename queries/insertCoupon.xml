@@ -1,0 +1,23 @@
+<query id="insertCoupon" action="insert">
+	<tables>
+		<table name="lodging_coupon" />
+	</tables>
+	<columns>
+		<column name="coupon_srl" var="coupon_srl" filter="number" notnull="notnull" />
+		<column name="module_srl" var="module_srl" filter="number" notnull="notnull" />
+		<column name="property_srl" var="property_srl" filter="number" default="0" />
+		<column name="title" var="title" notnull="notnull" />
+		<column name="code" var="code" />
+		<column name="discount_type" var="discount_type" default="amount" />
+		<column name="discount_value" var="discount_value" filter="number" default="0" />
+		<column name="max_discount" var="max_discount" filter="number" default="0" />
+		<column name="min_amount" var="min_amount" filter="number" default="0" />
+		<column name="apply_to" var="apply_to" default="all" />
+		<column name="start_ymd" var="start_ymd" />
+		<column name="end_ymd" var="end_ymd" />
+		<column name="use_limit" var="use_limit" filter="number" default="0" />
+		<column name="per_member_limit" var="per_member_limit" filter="number" default="1" />
+		<column name="status" var="status" default="open" />
+		<column name="regdate" var="regdate" />
+	</columns>
+</query>

@@ -1,0 +1,35 @@
+<query id="insertRoomType" action="insert">
+	<tables>
+		<table name="lodging_room_type" />
+	</tables>
+	<columns>
+		<column name="room_type_srl" var="room_type_srl" filter="number" notnull="notnull" />
+		<column name="property_srl" var="property_srl" filter="number" notnull="notnull" />
+		<column name="module_srl" var="module_srl" filter="number" notnull="notnull" />
+		<column name="title" var="title" notnull="notnull" />
+		<column name="description" var="description" />
+		<column name="total_rooms" var="total_rooms" filter="number" default="1" />
+		<column name="std_person" var="std_person" filter="number" default="2" />
+		<column name="max_person" var="max_person" filter="number" default="2" />
+		<column name="stay_price_weekday" var="stay_price_weekday" filter="number" default="0" />
+		<column name="stay_price_fri" var="stay_price_fri" filter="number" default="0" />
+		<column name="stay_price_sat" var="stay_price_sat" filter="number" default="0" />
+		<column name="use_dayuse" var="use_dayuse" default="N" />
+		<column name="dayuse_hours" var="dayuse_hours" filter="number" default="4" />
+		<column name="dayuse_open" var="dayuse_open" default="1200" />
+		<column name="dayuse_close" var="dayuse_close" default="2200" />
+		<column name="dayuse_price_weekday" var="dayuse_price_weekday" filter="number" default="0" />
+		<column name="dayuse_price_fri" var="dayuse_price_fri" filter="number" default="0" />
+		<column name="dayuse_price_sat" var="dayuse_price_sat" filter="number" default="0" />
+		<column name="min_nights" var="min_nights" filter="number" />
+		<column name="max_nights" var="max_nights" filter="number" />
+		<column name="extra_person_price" var="extra_person_price" filter="number" />
+		<column name="long_stay_nights" var="long_stay_nights" filter="number" />
+		<column name="long_stay_rate" var="long_stay_rate" filter="number" />
+		<column name="amenities" var="amenities" />
+		<column name="status" var="status" default="open" />
+		<column name="list_order" var="list_order" filter="number" default="0" />
+		<column name="regdate" var="regdate" />
+		<column name="last_update" var="last_update" />
+	</columns>
+</query>

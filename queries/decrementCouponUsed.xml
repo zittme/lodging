@@ -1,0 +1,12 @@
+<query id="decrementCouponUsed" action="update">
+	<tables>
+		<table name="lodging_coupon" />
+	</tables>
+	<columns>
+		<column name="used_count" var="used_count" default="minus(1)" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="coupon_srl" var="coupon_srl" filter="number" notnull="notnull" />
+		<condition operation="excess" column="used_count" default="0" pipe="and" />
+	</conditions>
+</query>

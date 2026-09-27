@@ -1,0 +1,13 @@
+<query id="updateCouponWalletUsed" action="update">
+	<tables>
+		<table name="lodging_coupon_wallet" />
+	</tables>
+	<columns>
+		<column name="status" var="status" default="used" />
+		<column name="booking_srl" var="booking_srl" filter="number" notnull="notnull" />
+		<column name="used_date" var="used_date" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="wallet_srl" var="wallet_srl" filter="number" notnull="notnull" />
+	</conditions>
+</query>

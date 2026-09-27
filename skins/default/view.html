@@ -1,0 +1,140 @@
+@version(2)
+@load('css/lodging.css')
+
+<div class="ldg">
+	<header class="ldg-head">
+		<span class="ldg-prop-type">{{ $lang->{'lodging_type_' . $property->property_type} ?? $property->property_type }}</span>
+		<h2 class="ldg-title">{{ $property->title }}</h2>
+		<p class="ldg-head-meta">
+			@if($review_summary->count > 0)
+			<span class="ldg-score">&#9733; {{ $review_summary->average }}</span>
+			<span class="ldg-muted">{{ sprintf($lang->lodging_review_count, number_format($review_summary->count)) }}</span>
+			@endif
+			@if($property->address)<span class="ldg-muted">{{ $property->address }} {{ $property->address_detail }}</span>@endif
+			@if($property->phone)<span class="ldg-muted">{{ $lang->lodging_phone }} {{ $property->phone }}</span>@endif
+		</p>
+		@if($property->summary)
+		<p class="ldg-desc">{{ $property->summary }}</p>
+		@endif
+	</header>
+
+	@if(count($property_images))
+	<div class="ldg-gallery @if(count($property_images) === 1) is-single @endif">
+		@foreach($property_images as $ldg_i => $image)
+		<img src="{{ $image->url }}" alt="{{ $property->title }}" class="@if($ldg_i === 0) is-main @endif" loading="lazy" />
+		@endforeach
+	</div>
+	@endif
+
+	<form class="ldg-search" action="{{ getUrl() }}" method="get">
+		<input type="hidden" name="mid" value="{{ $module_info->mid }}" />
+		<input type="hidden" name="act" value="dispLodgingView" />
+		<input type="hidden" name="property_srl" value="{{ $property->property_srl }}" />
+
+		<div class="ldg-search-tabs">
+			<label class="ldg-tab @if($stay_type === 'stay') is-on @endif"><input type="radio" name="stay_type" value="stay" @if($stay_type === 'stay') checked @endif onchange="this.form.submit()" />{{ $lang->lodging_stay }}</label>
+			<label class="ldg-tab @if($stay_type === 'dayuse') is-on @endif"><input type="radio" name="stay_type" value="dayuse" @if($stay_type === 'dayuse') checked @endif onchange="this.form.submit()" />{{ $lang->lodging_dayuse }}</label>
+		</div>
+
+		<div class="ldg-search-fields">
+			<label>
+				<span>{{ $stay_type === 'dayuse' ? $lang->lodging_dayuse : $lang->lodging_checkin }}</span>
+				<input type="date" name="checkin" value="{{ substr($checkin, 0, 4) }}-{{ substr($checkin, 4, 2) }}-{{ substr($checkin, 6, 2) }}" min="{{ date('Y-m-d') }}" required />
+			</label>
+			@if($stay_type === 'stay')
+			<label>
+				<span>{{ $lang->lodging_checkout }}</span>
+				<input type="date" name="checkout" value="{{ substr($checkout, 0, 4) }}-{{ substr($checkout, 4, 2) }}-{{ substr($checkout, 6, 2) }}" min="{{ date('Y-m-d', strtotime('+1 day')) }}" required />
+			</label>
+			@endif
+			<button type="submit" class="ldg-btn ldg-btn-primary">{{ $lang->lodging_search }}</button>
+		</div>
+	</form>
+
+	<ul class="ldg-rooms">
+		@foreach($room_types as $room_type)
+		<li class="ldg-room @if(!$room_type->available) is-soldout @endif">
+			@if($room_type->thumbnail_url)
+			<div class="ldg-room-thumb" style="background-image:url('{{ $room_type->thumbnail_url }}')"></div>
+			@endif
+			<div class="ldg-room-body">
+				<strong class="ldg-room-title">{{ $room_type->title }}</strong>
+				<p class="ldg-room-meta">
+					<span>{{ sprintf($lang->lodging_std_person, $room_type->std_person) }} · {{ sprintf($lang->lodging_max_person, $room_type->max_person) }}</span>
+					@if((int)($room_type->min_nights ?? 1) > 1)<span>{{ sprintf($lang->lodging_min_nights_note, (int)$room_type->min_nights) }}</span>@endif
+					@if($stay_type === 'stay')
+					<span>{{ $lang->lodging_checkin_time }} {{ substr($property->checkin_time, 0, 2) }}:{{ substr($property->checkin_time, 2, 2) }} · {{ $lang->lodging_checkout_time }} {{ substr($property->checkout_time, 0, 2) }}:{{ substr($property->checkout_time, 2, 2) }}</span>
+					@else
+					<span>{{ sprintf($lang->lodging_dayuse_hours, $room_type->dayuse_hours) }} ({{ substr($room_type->dayuse_open, 0, 2) }}:{{ substr($room_type->dayuse_open, 2, 2) }}~{{ substr($room_type->dayuse_close, 0, 2) }}:{{ substr($room_type->dayuse_close, 2, 2) }})</span>
+					@endif
+				</p>
+				@if($room_type->description)
+				<p class="ldg-room-desc">{{ $room_type->description }}</p>
+				@endif
+			</div>
+			<div class="ldg-room-cta">
+				@if($room_type->available)
+				<span class="ldg-room-price">{{ number_format($room_type->price) }}<small>{{ $lang->lodging_won }}@if($stay_type === 'stay' && $nights > 1) / {{ sprintf($lang->lodging_nights, $nights) }}@endif</small></span>
+				<a class="ldg-btn ldg-btn-primary" href="{{ getUrl('', 'mid', $module_info->mid, 'act', 'dispLodgingBook', 'property_srl', $property->property_srl, 'room_type_srl', $room_type->room_type_srl, 'stay_type', $stay_type, 'checkin', $checkin, 'checkout', $checkout) }}">{{ $lang->lodging_book_now }}</a>
+				@elseif($room_type->unavailable_reason === 'no_dayuse')
+				<span class="ldg-soldout">{{ $lang->lodging_no_dayuse }}</span>
+				@else
+				<span class="ldg-soldout">{{ $lang->lodging_sold_out }}</span>
+				@endif
+			</div>
+		</li>
+		@endforeach
+		@if(!count($room_types))
+		<li class="ldg-empty">{{ $lang->lodging_no_property }}</li>
+		@endif
+	</ul>
+
+	@if($property->description)
+	<section class="ldg-section">
+		<h3>{{ $lang->lodging_property }}</h3>
+		<div class="ldg-content xe_content">{!! $property->description !!}</div>
+	</section>
+	@endif
+
+	<section class="ldg-section">
+		<h3>{{ $lang->lodging_cancel_policy }}</h3>
+		@if(count($cancel_rules))
+		<ul class="ldg-rules">
+			@foreach($cancel_rules as $rule)
+			<li>
+				@if($rule->days_before > 0)
+				{{ sprintf($lang->lodging_cancel_rule_row, $rule->days_before, $rule->refund_rate) }}
+				@else
+				{{ sprintf($lang->lodging_cancel_rule_today, $rule->refund_rate) }}
+				@endif
+			</li>
+			@endforeach
+		</ul>
+		@else
+		<p class="ldg-muted">{{ $lang->lodging_no_cancel_rule }}</p>
+		@endif
+	</section>
+
+	<section class="ldg-section">
+		<h3>{{ $lang->lodging_review }} @if($review_summary->count > 0)<span class="ldg-score">&#9733; {{ $review_summary->average }}</span>@endif</h3>
+		@if(count($review_list))
+		<ul class="ldg-reviews">
+			@foreach($review_list as $review)
+			<li>
+				<p class="ldg-review-head">
+					<strong>{{ $review->writer_name }}</strong>
+					<span class="ldg-score">&#9733; {{ $review->score }}</span>
+					<span class="ldg-muted">{{ zdate($review->regdate, 'Y.m.d') }}</span>
+				</p>
+				<p class="ldg-review-body">{{ $review->content }}</p>
+				@if($review->reply)
+				<p class="ldg-review-reply">{{ $review->reply }}</p>
+				@endif
+			</li>
+			@endforeach
+		</ul>
+		@else
+		<p class="ldg-muted">{{ $lang->lodging_no_review }}</p>
+		@endif
+	</section>
+</div>

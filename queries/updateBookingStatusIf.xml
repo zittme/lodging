@@ -1,0 +1,19 @@
+<query id="updateBookingStatusIf" action="update">
+	<tables>
+		<table name="lodging_booking" />
+	</tables>
+	<columns>
+		<column name="status" var="status" notnull="notnull" />
+		<column name="pay_status" var="pay_status" />
+		<column name="cancel_reason" var="cancel_reason" />
+		<column name="canceled_date" var="canceled_date" />
+		<column name="refund_amount" var="refund_amount" filter="number" />
+		<column name="hold_expires" var="hold_expires" />
+		<column name="last_update" var="last_update" notnull="notnull" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="booking_srl" var="booking_srl" filter="number" notnull="notnull" />
+		<!-- 지금 상태가 이 목록일 때만 바꾼다. 동시에 온 두 요청 중 하나만 이긴다 -->
+		<condition operation="in" column="status" var="from_status_list" notnull="notnull" pipe="and" />
+	</conditions>
+</query>

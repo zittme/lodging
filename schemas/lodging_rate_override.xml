@@ -1,0 +1,10 @@
+<table name="lodging_rate_override">
+	<column name="override_srl" type="bigint" notnull="notnull" primarykey="primarykey" />
+	<column name="room_type_srl" type="bigint" notnull="notnull" default="0" />
+	<column name="ymd" type="char" size="8" notnull="notnull" />
+	<!-- stay / dayuse -->
+	<column name="stay_type" type="varchar" size="10" notnull="notnull" default="stay" />
+	<column name="price" type="bigint" notnull="notnull" default="0" />
+	<column name="memo" type="varchar" size="120" />
+	<index name="idx_room_ymd_type" columns="room_type_srl,ymd,stay_type" type="unique" />
+</table>

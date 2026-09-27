@@ -1,0 +1,13 @@
+<query id="insertCouponWallet" action="insert">
+	<tables>
+		<table name="lodging_coupon_wallet" />
+	</tables>
+	<columns>
+		<column name="wallet_srl" var="wallet_srl" filter="number" notnull="notnull" />
+		<column name="coupon_srl" var="coupon_srl" filter="number" notnull="notnull" />
+		<column name="member_srl" var="member_srl" filter="number" notnull="notnull" />
+		<column name="status" var="status" default="available" />
+		<column name="booking_srl" var="booking_srl" filter="number" default="0" />
+		<column name="regdate" var="regdate" />
+	</columns>
+</query>

@@ -1,0 +1,18 @@
+<query id="getPropertyList" action="select">
+	<tables>
+		<table name="lodging_property" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="module_srl" var="module_srl" filter="number" notnull="notnull" />
+		<condition operation="equal" column="status" var="status" pipe="and" />
+		<condition operation="equal" column="vendor_srl" var="vendor_srl" filter="number" pipe="and" />
+	</conditions>
+	<navigation>
+		<index var="sort_index" default="list_order" order="asc" />
+		<list_count var="list_count" default="100" />
+		<page var="page" default="1" />
+	</navigation>
+</query>

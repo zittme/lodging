@@ -1,0 +1,13 @@
+<query id="updateInventoryDay" action="update">
+	<tables>
+		<table name="lodging_inventory" />
+	</tables>
+	<columns>
+		<column name="total_override" var="total_override" filter="number" />
+		<column name="closed" var="closed" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="room_type_srl" var="room_type_srl" filter="number" notnull="notnull" />
+		<condition operation="equal" column="ymd" var="ymd" notnull="notnull" pipe="and" />
+	</conditions>
+</query>

@@ -1,0 +1,37 @@
+<query id="insertBooking" action="insert">
+	<tables>
+		<table name="lodging_booking" />
+	</tables>
+	<columns>
+		<column name="booking_srl" var="booking_srl" filter="number" notnull="notnull" />
+		<column name="booking_code" var="booking_code" notnull="notnull" />
+		<column name="module_srl" var="module_srl" filter="number" notnull="notnull" />
+		<column name="property_srl" var="property_srl" filter="number" notnull="notnull" />
+		<column name="room_type_srl" var="room_type_srl" filter="number" notnull="notnull" />
+		<column name="vendor_srl" var="vendor_srl" filter="number" default="0" />
+		<column name="stay_type" var="stay_type" notnull="notnull" />
+		<column name="checkin_ymd" var="checkin_ymd" notnull="notnull" />
+		<column name="checkout_ymd" var="checkout_ymd" notnull="notnull" />
+		<column name="dayuse_start" var="dayuse_start" />
+		<column name="person_count" var="person_count" filter="number" default="2" />
+		<column name="member_srl" var="member_srl" filter="number" default="0" />
+		<column name="guest_name" var="guest_name" notnull="notnull" />
+		<column name="guest_phone" var="guest_phone" notnull="notnull" />
+		<column name="guest_email" var="guest_email" />
+		<column name="guest_password" var="guest_password" />
+		<column name="room_amount" var="room_amount" filter="number" default="0" />
+		<column name="discount_amount" var="discount_amount" filter="number" default="0" />
+		<column name="total_amount" var="total_amount" filter="number" default="0" />
+		<column name="coupon_srl" var="coupon_srl" filter="number" default="0" />
+		<column name="point_used" var="point_used" filter="number" default="0" />
+		<column name="pay_method" var="pay_method" default="onsite" />
+		<column name="pay_status" var="pay_status" default="pending" />
+		<column name="status" var="status" default="confirmed" />
+		<column name="hold_expires" var="hold_expires" />
+		<column name="cancel_policy" var="cancel_policy" />
+		<column name="request_memo" var="request_memo" />
+		<column name="ipaddress" var="ipaddress" />
+		<column name="regdate" var="regdate" />
+		<column name="last_update" var="last_update" />
+	</columns>
+</query>

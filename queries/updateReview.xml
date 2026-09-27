@@ -1,0 +1,13 @@
+<query id="updateReview" action="update">
+	<tables>
+		<table name="lodging_review" />
+	</tables>
+	<columns>
+		<column name="reply" var="reply" />
+		<column name="reply_date" var="reply_date" />
+		<column name="status" var="status" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="review_srl" var="review_srl" filter="number" notnull="notnull" />
+	</conditions>
+</query>

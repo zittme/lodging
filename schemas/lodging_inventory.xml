@@ -1,0 +1,15 @@
+<table name="lodging_inventory">
+	<column name="inventory_srl" type="bigint" notnull="notnull" primarykey="primarykey" />
+	<column name="room_type_srl" type="bigint" notnull="notnull" default="0" />
+	<!-- YYYYMMDD. 숙박은 각 숙박일(체크아웃일 제외)에, 대실은 이용일에 한 행씩 잡는다. -->
+	<column name="ymd" type="char" size="8" notnull="notnull" />
+	<!-- 이 날짜만 판매 객실 수를 바꿀 때. 0 이면 room_type.total_rooms 를 쓴다. -->
+	<column name="total_override" type="bigint" notnull="notnull" default="0" />
+	<!-- 대실은 체크인 전에 끝나므로 숙박과 서로 재고를 소모하지 않는다. 카운터를 따로 둔다. -->
+	<column name="booked_stay" type="bigint" notnull="notnull" default="0" />
+	<column name="booked_dayuse" type="bigint" notnull="notnull" default="0" />
+	<!-- Y 면 그 날짜 판매 중지 (휴무·공사) -->
+	<column name="closed" type="char" size="1" notnull="notnull" default="N" />
+	<index name="idx_room_ymd" columns="room_type_srl,ymd" type="unique" />
+	<index name="idx_ymd" columns="ymd" />
+</table>

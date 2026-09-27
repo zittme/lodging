@@ -1,0 +1,18 @@
+<query id="getCouponWalletList" action="select">
+	<tables>
+		<table name="lodging_coupon_wallet" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="member_srl" var="member_srl" filter="number" notnull="notnull" />
+		<condition operation="equal" column="status" var="status" pipe="and" />
+	</conditions>
+	<navigation>
+		<index var="sort_index" default="wallet_srl" order="desc" />
+		<list_count var="list_count" default="100" />
+		<page_count var="page_count" default="1" />
+		<page var="page" default="1" />
+	</navigation>
+</query>

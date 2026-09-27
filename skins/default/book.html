@@ -1,0 +1,147 @@
+@version(2)
+@load('css/lodging.css')
+
+<div class="ldg ldg-narrow">
+	<h2 class="ldg-title">{{ $lang->lodging_book_now }}</h2>
+
+	<div class="ldg-summary">
+		<strong>{{ $property->title }} · {{ $room_type->title }}</strong>
+		<span>
+			@if($stay_type === 'stay')
+			{{ zdate($checkin, 'Y.m.d') }} ~ {{ zdate($checkout, 'Y.m.d') }} ({{ sprintf($lang->lodging_nights, $nights) }})
+			@else
+			{{ $lang->lodging_dayuse }} · {{ zdate($checkin, 'Y.m.d') }} · {{ sprintf($lang->lodging_dayuse_hours, $room_type->dayuse_hours) }}
+			@endif
+		</span>
+		<span class="ldg-room-price" data-ldg-price data-base="{{ (int)$room_amount }}" data-std="{{ (int)$room_type->std_person }}" data-extra="{{ (int)$extra_person_total }}"><b data-ldg-price-num>{{ number_format($room_amount) }}</b><small>{{ $lang->lodging_won }}</small></span>
+		@if((int)($room_quote['long_stay_discount'] ?? 0) > 0)
+		<span class="ldg-quote-line">{{ $lang->lodging_long_stay_discount }} -{{ number_format($room_quote['long_stay_discount']) }}{{ $lang->lodging_won }}</span>
+		@endif
+		@if((int)$extra_person_total > 0)
+		<span class="ldg-quote-line">{{ sprintf($lang->lodging_extra_person_note, (int)$room_type->std_person, number_format($extra_person_total)) }}</span>
+		@endif
+		@if($stay_type === 'stay' && ((int)($room_type->min_nights ?? 1) > 1 || (int)($room_type->max_nights ?? 30) !== 30))
+		<span class="ldg-quote-line">{{ sprintf($lang->lodging_nights_range_note, max(1, (int)($room_type->min_nights ?? 1)), max(1, (int)($room_type->max_nights ?? 30))) }}</span>
+		@endif
+	</div>
+
+	<form class="ldg-form" action="{{ getUrl() }}" method="post">
+		<input type="hidden" name="module" value="lodging" />
+		<input type="hidden" name="act" value="procLodgingBook" />
+		<input type="hidden" name="mid" value="{{ $module_info->mid }}" />
+		<input type="hidden" name="property_srl" value="{{ $property->property_srl }}" />
+		<input type="hidden" name="room_type_srl" value="{{ $room_type->room_type_srl }}" />
+		<input type="hidden" name="stay_type" value="{{ $stay_type }}" />
+		<input type="hidden" name="checkin" value="{{ $checkin }}" />
+		<input type="hidden" name="checkout" value="{{ $checkout }}" />
+
+		<fieldset>
+			<legend>{{ $lang->lodging_booker_info }}</legend>
+
+			<div class="ldg-row">
+				<label for="ldg_name">{{ $lang->lodging_booker_name }} <em>*</em></label>
+				<input type="text" id="ldg_name" name="guest_name" value="{{ $logged_name }}" required />
+			</div>
+			<div class="ldg-row">
+				<label for="ldg_phone">{{ $lang->lodging_booker_phone }} <em>*</em></label>
+				<input type="tel" id="ldg_phone" name="guest_phone" value="{{ $logged_phone }}" required />
+			</div>
+			<div class="ldg-row">
+				<label for="ldg_email">{{ $lang->lodging_booker_email }}</label>
+				<input type="email" id="ldg_email" name="guest_email" value="{{ $logged_email }}" />
+			</div>
+			@if(!$is_logged)
+			<div class="ldg-row">
+				<label for="ldg_password">{{ $lang->lodging_guest_password }} <em>*</em></label>
+				<input type="password" id="ldg_password" name="guest_password" required autocomplete="off" />
+				<small>{{ $lang->lodging_guest_password_help }}</small>
+			</div>
+			@endif
+			<div class="ldg-row">
+				<label for="ldg_person">{{ $lang->lodging_person }}</label>
+				<select id="ldg_person" name="person_count">
+					@for($i = 1; $i <= (int)$room_type->max_person; $i++)
+					<option value="{{ $i }}" @if($i === (int)$room_type->std_person) selected @endif>{{ $i }}</option>
+					@endfor
+				</select>
+			</div>
+			@if($stay_type === 'dayuse')
+			<div class="ldg-row">
+				<label for="ldg_dayuse_start">{{ $lang->lodging_dayuse_start }}</label>
+				<select id="ldg_dayuse_start" name="dayuse_start">
+					@php
+					$ldg_open = (int)substr($room_type->dayuse_open, 0, 2);
+					$ldg_close = (int)substr($room_type->dayuse_close, 0, 2) - (int)$room_type->dayuse_hours;
+					@endphp
+					@for($h = $ldg_open; $h <= max($ldg_open, $ldg_close); $h++)
+					<option value="{{ sprintf('%02d00', $h) }}">{{ sprintf('%02d:00', $h) }}</option>
+					@endfor
+				</select>
+			</div>
+			@endif
+			<div class="ldg-row">
+				<label for="ldg_memo">{{ $lang->lodging_request_memo }}</label>
+				<input type="text" id="ldg_memo" name="request_memo" maxlength="250" />
+			</div>
+			<div class="ldg-row">
+				<label for="ldg_coupon">{{ $lang->lodging_coupon_code }}</label>
+				<input type="text" id="ldg_coupon" name="coupon_code" autocomplete="off" />
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>{{ $lang->lodging_pay_method }}</legend>
+			<div class="ldg-paymethods">
+				@if($can_prepay)
+				<label class="ldg-choice"><input type="radio" name="pay_method" value="prepay" checked /> {{ $lang->lodging_pay_prepay }}</label>
+				@endif
+				@if($can_onsite)
+				<label class="ldg-choice"><input type="radio" name="pay_method" value="onsite" @if(!$can_prepay) checked @endif /> {{ $lang->lodging_pay_onsite }}</label>
+				@endif
+			</div>
+		</fieldset>
+
+		<div class="ldg-cancelbox">
+			<strong>{{ $lang->lodging_cancel_policy }}</strong>
+			@if(count($cancel_rules))
+			<ul class="ldg-rules">
+				@foreach($cancel_rules as $rule)
+				<li>
+					@if($rule->days_before > 0)
+					{{ sprintf($lang->lodging_cancel_rule_row, $rule->days_before, $rule->refund_rate) }}
+					@else
+					{{ sprintf($lang->lodging_cancel_rule_today, $rule->refund_rate) }}
+					@endif
+				</li>
+				@endforeach
+			</ul>
+			@else
+			<p class="ldg-muted">{{ $lang->lodging_no_cancel_rule }}</p>
+			@endif
+		</div>
+
+		<div class="ldg-actions">
+			<button type="submit" class="ldg-btn ldg-btn-primary ldg-btn-lg">{{ $lang->lodging_book_now }} · <span data-ldg-price-num>{{ number_format($room_amount) }}</span>{{ $lang->lodging_won }}</button>
+		</div>
+	</form>
+</div>
+
+<script>
+(function() {
+	var box = document.querySelector('[data-ldg-price]');
+	var select = document.getElementById('ldg_person');
+	if (!box || !select) { return; }
+	var base = parseInt(box.getAttribute('data-base'), 10) || 0;
+	var std = parseInt(box.getAttribute('data-std'), 10) || 1;
+	var extra = parseInt(box.getAttribute('data-extra'), 10) || 0;
+	if (extra <= 0) { return; }
+	// 표시용 안내 금액이다. 실제 금액은 서버가 다시 계산한다.
+	select.addEventListener('change', function() {
+		var person = parseInt(select.value, 10) || std;
+		var total = base + Math.max(0, person - std) * extra;
+		document.querySelectorAll('[data-ldg-price-num]').forEach(function(el) {
+			el.textContent = total.toLocaleString('en-US');
+		});
+	});
+})();
+</script>

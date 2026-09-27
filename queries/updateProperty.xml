@@ -1,0 +1,28 @@
+<query id="updateProperty" action="update">
+	<tables>
+		<table name="lodging_property" />
+	</tables>
+	<columns>
+		<column name="title" var="title" />
+		<column name="summary" var="summary" />
+		<column name="description" var="description" />
+		<column name="property_type" var="property_type" />
+		<column name="address" var="address" />
+		<column name="address_detail" var="address_detail" />
+		<column name="phone" var="phone" />
+		<column name="checkin_time" var="checkin_time" />
+		<column name="checkout_time" var="checkout_time" />
+		<column name="amenities" var="amenities" />
+		<column name="latitude" var="latitude" />
+		<column name="longitude" var="longitude" />
+		<column name="notify_email" var="notify_email" />
+		<column name="allow_onsite_pay" var="allow_onsite_pay" />
+		<column name="allow_prepay" var="allow_prepay" />
+		<column name="status" var="status" />
+		<column name="list_order" var="list_order" filter="number" />
+		<column name="last_update" var="last_update" notnull="notnull" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="property_srl" var="property_srl" filter="number" notnull="notnull" />
+	</conditions>
+</query>

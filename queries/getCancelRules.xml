@@ -1,0 +1,14 @@
+<query id="getCancelRules" action="select">
+	<tables>
+		<table name="lodging_cancel_rule" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="property_srl" var="property_srl" filter="number" notnull="notnull" />
+	</conditions>
+	<navigation>
+		<index var="sort_index" default="days_before" order="desc" />
+	</navigation>
+</query>

@@ -1,0 +1,37 @@
+<table name="lodging_room_type">
+	<column name="room_type_srl" type="bigint" notnull="notnull" primarykey="primarykey" />
+	<column name="property_srl" type="bigint" notnull="notnull" default="0" index="idx_property_srl" />
+	<column name="module_srl" type="bigint" notnull="notnull" default="0" index="idx_module_srl" />
+	<column name="title" type="varchar" size="250" notnull="notnull" />
+	<column name="description" type="text" />
+	<!-- 이 타입으로 판매하는 총 객실 수. 개별 호실은 관리하지 않는다. -->
+	<column name="total_rooms" type="bigint" notnull="notnull" default="1" />
+	<column name="std_person" type="bigint" notnull="notnull" default="2" />
+	<column name="max_person" type="bigint" notnull="notnull" default="2" />
+	<!-- 숙박 기본가 (원). 주중 / 금 / 토 -->
+	<column name="stay_price_weekday" type="bigint" notnull="notnull" default="0" />
+	<column name="stay_price_fri" type="bigint" notnull="notnull" default="0" />
+	<column name="stay_price_sat" type="bigint" notnull="notnull" default="0" />
+	<!-- 대실. 같은 객실을 공유하므로 별도 객실 수는 없다. -->
+	<column name="use_dayuse" type="char" size="1" notnull="notnull" default="N" />
+	<column name="dayuse_hours" type="bigint" notnull="notnull" default="4" />
+	<!-- 대실 이용 가능 시작·종료 시각 (HHMM) -->
+	<column name="dayuse_open" type="char" size="4" notnull="notnull" default="1200" />
+	<column name="dayuse_close" type="char" size="4" notnull="notnull" default="2200" />
+	<column name="dayuse_price_weekday" type="bigint" notnull="notnull" default="0" />
+	<column name="dayuse_price_fri" type="bigint" notnull="notnull" default="0" />
+	<column name="dayuse_price_sat" type="bigint" notnull="notnull" default="0" />
+	<!-- 한 번에 예약할 수 있는 숙박일 범위 -->
+	<column name="min_nights" type="bigint" notnull="notnull" default="1" />
+	<column name="max_nights" type="bigint" notnull="notnull" default="30" />
+	<!-- 기준 인원을 넘는 1명당 1박(대실은 1회) 추가 요금 -->
+	<column name="extra_person_price" type="bigint" notnull="notnull" default="0" />
+	<!-- 연박 할인: long_stay_nights 박 이상이면 숙박 요금에서 long_stay_rate % 를 뺀다. 0 이면 쓰지 않는다 -->
+	<column name="long_stay_nights" type="bigint" notnull="notnull" default="0" />
+	<column name="long_stay_rate" type="bigint" notnull="notnull" default="0" />
+	<column name="amenities" type="text" />
+	<column name="status" type="varchar" size="20" notnull="notnull" default="open" index="idx_status" />
+	<column name="list_order" type="bigint" notnull="notnull" default="0" />
+	<column name="regdate" type="char" size="14" />
+	<column name="last_update" type="char" size="14" />
+</table>

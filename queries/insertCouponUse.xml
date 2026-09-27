@@ -1,0 +1,13 @@
+<query id="insertCouponUse" action="insert">
+	<tables>
+		<table name="lodging_coupon_use" />
+	</tables>
+	<columns>
+		<column name="use_srl" var="use_srl" filter="number" notnull="notnull" />
+		<column name="coupon_srl" var="coupon_srl" filter="number" notnull="notnull" />
+		<column name="booking_srl" var="booking_srl" filter="number" notnull="notnull" />
+		<column name="member_srl" var="member_srl" filter="number" default="0" />
+		<column name="discount_amount" var="discount_amount" filter="number" default="0" />
+		<column name="regdate" var="regdate" />
+	</columns>
+</query>

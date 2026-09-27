@@ -1,0 +1,16 @@
+<query id="getInventoryRange" action="select">
+	<tables>
+		<table name="lodging_inventory" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="room_type_srl" var="room_type_srl" filter="number" notnull="notnull" />
+		<condition operation="more" column="ymd" var="start_ymd" notnull="notnull" pipe="and" />
+		<condition operation="less" column="ymd" var="end_ymd" notnull="notnull" pipe="and" />
+	</conditions>
+	<navigation>
+		<index var="sort_index" default="ymd" order="asc" />
+	</navigation>
+</query>

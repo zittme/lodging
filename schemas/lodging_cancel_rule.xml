@@ -1,0 +1,9 @@
+<table name="lodging_cancel_rule">
+	<column name="rule_srl" type="bigint" notnull="notnull" primarykey="primarykey" />
+	<column name="property_srl" type="bigint" notnull="notnull" default="0" index="idx_property_srl" />
+	<!-- 체크인 며칠 전부터 이 환불율이 적용되는가. 0 = 당일. -->
+	<column name="days_before" type="bigint" notnull="notnull" default="0" />
+	<!-- 환불율 (0~100). 예: 7일 전 100, 3일 전 50, 당일 0 -->
+	<column name="refund_rate" type="bigint" notnull="notnull" default="0" />
+	<index name="idx_property_days" columns="property_srl,days_before" type="unique" />
+</table>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+
+	<grants>
+		<grant name="view" default="guest">
+			<title xml:lang="ko">숙소 열람</title>
+			<title xml:lang="en">View properties</title>
+		</grant>
+		<grant name="book" default="guest">
+			<title xml:lang="ko">예약하기</title>
+			<title xml:lang="en">Make a booking</title>
+		</grant>
+	</grants>
+
+	<actions>
+		<!-- 프론트 -->
+		<action name="dispLodgingIndex" class="Controllers\Front" index="true" permission="view" />
+		<action name="dispLodgingView" class="Controllers\Front" permission="view">
+			<route route="property/$property_srl:int" />
+		</action>
+		<action name="dispLodgingBook" class="Controllers\Front" permission="book" meta-noindex="true">
+			<route route="book/$property_srl:int/$room_type_srl:int" />
+		</action>
+		<action name="dispLodgingResult" class="Controllers\Front" meta-noindex="true">
+			<route route="result/$code" />
+		</action>
+		<action name="dispLodgingMy" class="Controllers\Front" meta-noindex="true">
+			<route route="my" />
+		</action>
+		<action name="dispLodgingCoupons" class="Controllers\Front" permission="view">
+			<route route="benefits" />
+		</action>
+		<action name="dispLodgingMyCoupons" class="Controllers\Front" meta-noindex="true">
+			<route route="mycoupons" />
+		</action>
+		<action name="procLodgingClaimCoupon" class="Controllers\Front" />
+		<action name="dispLodgingMyPoints" class="Controllers\Front" meta-noindex="true">
+			<route route="points" />
+		</action>
+
+		<!-- 요금·재고 달력 JSON. 숙소 상세의 달력과 예약 상자가 한 달씩 받아 간다 -->
+		<action name="getLodgingCalendar" class="Controllers\Front" permission="view" />
+
+		<action name="procLodgingBook" class="Controllers\Front" permission="book" />
+		<action name="procLodgingGuestLookup" class="Controllers\Front" />
+		<action name="procLodgingCancel" class="Controllers\Front" />
+		<action name="procLodgingReview" class="Controllers\Front" />
+
+		<!--
+		  운영은 별도 전용 콘솔에서 한다 (학원·커머스와 같은 규약).
+		  개별 화면은 ?p=<page> 로 갈라지며 Console 이 Admin 메서드를 직접 호출하므로
+		  disp 액션 등록이 필요 없다. proc 액션만 등록한다.
+		-->
+		<action name="dispLodgingConsole" class="Controllers\Console" standalone="true" />
+
+		<!-- 코어 관리자에는 콘솔로 안내하는 화면 하나만 둔다 -->
+		<action name="dispLodgingAdminIntro" class="Controllers\Admin" admin-index="true" menu-name="lodging" menu-index="true" permission="manager" />
+
+		<action name="procLodgingAdminInsertInstance" class="Controllers\Admin" permission="manager" />
+		<action name="procLodgingAdminInsertProperty" class="Controllers\Admin" permission="manager" />
+		<action name="procLodgingAdminDeleteProperty" class="Controllers\Admin" permission="manager" />
+		<action name="procLodgingAdminDeleteImage" class="Controllers\Admin" permission="manager" />
+		<action name="procLodgingAdminInsertRoomType" class="Controllers\Admin" permission="manager" />
+		<action name="procLodgingAdminDeleteRoomType" class="Controllers\Admin" permission="manager" />
+		<action name="procLodgingAdminSaveDay" class="Controllers\Admin" permission="manager" />
+		<action name="procLodgingAdminBooking" class="Controllers\Admin" permission="manager" />
+		<action name="procLodgingAdminSaveRooms" class="Controllers\Admin" permission="manager" />
+		<action name="procLodgingAdminInsertCoupon" class="Controllers\Admin" permission="manager" />
+		<action name="procLodgingAdminDeleteCoupon" class="Controllers\Admin" permission="manager" />
+		<action name="procLodgingAdminReviewReply" class="Controllers\Admin" permission="manager" />
+	</actions>
+
+	<classes>
+		<class type="default" name="Controllers\Base" />
+		<class type="install" name="Controllers\Install" />
+	</classes>
+
+	<eventHandlers>
+		<!-- 인스턴스가 0개면 사이트맵 모듈 목록에 뜨지 않아 첫 페이지를 만들 수 없다. -->
+		<eventHandler after="menu.getModuleListInSitemap" class="Controllers\Trigger" method="addToSitemap" />
+		<!--
+		  zittme_pay 결제 통지 수신.
+		  XML 선언만으로는 동작하지 않는다. 배포 후 관리자에서 모듈 업데이트를 1회 실행해야
+		  DB triggers 테이블에 등록된다.
+		-->
+		<eventHandler after="zittme_pay.approved" class="Controllers\Trigger" method="triggerPayApproved" />
+		<eventHandler after="zittme_pay.cancelled" class="Controllers\Trigger" method="triggerPayCancelled" />
+	</eventHandlers>
+
+	<menus>
+		<menu name="lodging" type="all">
+			<title xml:lang="ko">숙박</title>
+			<title xml:lang="en">Lodging</title>
+		</menu>
+	</menus>
+
+</module>

@@ -1,0 +1,14 @@
+<query id="incrementStay" action="update">
+	<tables>
+		<table name="lodging_inventory" />
+	</tables>
+	<columns>
+		<column name="booked_stay" var="booked_stay" default="plus(1)" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="room_type_srl" var="room_type_srl" filter="number" notnull="notnull" />
+		<condition operation="equal" column="ymd" var="ymd" notnull="notnull" pipe="and" />
+		<!-- 만실이면 갱신 행 수 0 — 호출측이 실패로 판정한다 -->
+		<condition operation="below" column="booked_stay" var="cap" filter="number" notnull="notnull" pipe="and" />
+	</conditions>
+</query>

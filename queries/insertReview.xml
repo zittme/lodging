@@ -1,0 +1,17 @@
+<query id="insertReview" action="insert">
+	<tables>
+		<table name="lodging_review" />
+	</tables>
+	<columns>
+		<column name="review_srl" var="review_srl" filter="number" notnull="notnull" />
+		<column name="property_srl" var="property_srl" filter="number" notnull="notnull" />
+		<column name="room_type_srl" var="room_type_srl" filter="number" default="0" />
+		<column name="booking_srl" var="booking_srl" filter="number" notnull="notnull" />
+		<column name="member_srl" var="member_srl" filter="number" default="0" />
+		<column name="writer_name" var="writer_name" />
+		<column name="score" var="score" filter="number" default="5" />
+		<column name="content" var="content" />
+		<column name="status" var="status" default="public" />
+		<column name="regdate" var="regdate" />
+	</columns>
+</query>

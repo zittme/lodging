@@ -1,0 +1,51 @@
+<table name="lodging_booking">
+	<column name="booking_srl" type="bigint" notnull="notnull" primarykey="primarykey" />
+	<!-- 사람에게 보여 주는 예약번호. zittme_pay 연동 시 source_code 로도 넘긴다. -->
+	<column name="booking_code" type="varchar" size="40" notnull="notnull" index="idx_booking_code" />
+	<column name="module_srl" type="bigint" notnull="notnull" default="0" index="idx_module_srl" />
+	<column name="property_srl" type="bigint" notnull="notnull" default="0" index="idx_property_srl" />
+	<column name="room_type_srl" type="bigint" notnull="notnull" default="0" index="idx_room_type_srl" />
+	<!-- 몰인몰 대비. 예약 시점의 업소 vendor_srl 을 복사해 둔다. -->
+	<column name="vendor_srl" type="bigint" notnull="notnull" default="0" index="idx_vendor_srl" />
+	<!-- stay / dayuse -->
+	<column name="stay_type" type="varchar" size="10" notnull="notnull" default="stay" />
+	<column name="checkin_ymd" type="char" size="8" notnull="notnull" index="idx_checkin" />
+	<!-- 숙박: 체크아웃일. 대실: 이용일과 같다. -->
+	<column name="checkout_ymd" type="char" size="8" notnull="notnull" />
+	<!-- 대실 입실 예정 시각 (HHMM). 숙박이면 빈 값. -->
+	<column name="dayuse_start" type="char" size="4" />
+	<column name="person_count" type="bigint" notnull="notnull" default="2" />
+	<column name="member_srl" type="bigint" notnull="notnull" default="0" index="idx_member_srl" />
+	<column name="guest_name" type="varchar" size="80" notnull="notnull" />
+	<column name="guest_phone" type="varchar" size="60" notnull="notnull" />
+	<column name="guest_email" type="varchar" size="120" />
+	<!-- 비회원 조회용 비밀번호 해시 -->
+	<column name="guest_password" type="varchar" size="255" />
+	<!-- 요금은 예약 시점 스냅샷. 이후 요금표가 바뀌어도 예약 금액은 불변이다. -->
+	<column name="room_amount" type="bigint" notnull="notnull" default="0" />
+	<column name="discount_amount" type="bigint" notnull="notnull" default="0" />
+	<column name="total_amount" type="bigint" notnull="notnull" default="0" />
+	<column name="coupon_srl" type="bigint" notnull="notnull" default="0" />
+	<column name="point_used" type="bigint" notnull="notnull" default="0" />
+	<!-- prepay: 짓미페이 선결제 / onsite: 현장결제 -->
+	<column name="pay_method" type="varchar" size="10" notnull="notnull" default="onsite" />
+	<!-- pending: 결제대기 / paid: 결제완료 / refunded / partial_refunded -->
+	<column name="pay_status" type="varchar" size="20" notnull="notnull" default="pending" index="idx_pay_status" />
+	<!-- hold: 결제 대기 / confirmed: 확정 / canceled: 취소 / expired: 결제 시간 초과 / completed: 이용완료 / noshow -->
+	<column name="status" type="varchar" size="20" notnull="notnull" default="confirmed" index="idx_status" />
+	<!-- 취소 규정 스냅샷 (JSON). 예약 후 업소가 규정을 바꿔도 이 예약에는 적용되지 않는다. -->
+	<!-- YYYYMMDDHHIISS. 결제 대기 예약이 재고를 붙잡아 둘 수 있는 마감 시각 -->
+	<column name="hold_expires" type="char" size="14" index="idx_hold_expires" />
+	<column name="cancel_policy" type="text" />
+	<column name="cancel_reason" type="varchar" size="250" />
+	<column name="canceled_date" type="char" size="14" />
+	<column name="refund_amount" type="bigint" notnull="notnull" default="0" />
+	<column name="request_memo" type="varchar" size="250" />
+	<!-- 프런트가 배정한 호실. 0 = 미배정. 판매·재고 판정에는 쓰지 않는다. -->
+	<column name="assigned_room_srl" type="bigint" notnull="notnull" default="0" index="idx_assigned_room" />
+	<column name="ipaddress" type="varchar" size="128" />
+	<column name="regdate" type="char" size="14" index="idx_regdate" />
+	<column name="last_update" type="char" size="14" />
+	<!-- 운영 목록이 항상 (업소 + 상태 + 체크인일) 조회라 묶어 건다. -->
+	<index name="idx_property_status_checkin" columns="property_srl,status,checkin_ymd" />
+</table>

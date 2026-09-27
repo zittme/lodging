@@ -1,0 +1,15 @@
+<query id="getRoomTypeList" action="select">
+	<tables>
+		<table name="lodging_room_type" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="property_srl" var="property_srl" filter="number" notnull="notnull" />
+		<condition operation="equal" column="status" var="status" pipe="and" />
+	</conditions>
+	<navigation>
+		<index var="sort_index" default="list_order" order="asc" />
+	</navigation>
+</query>

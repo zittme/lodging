@@ -1,0 +1,15 @@
+<query id="insertRoom" action="insert">
+	<tables>
+		<table name="lodging_room" />
+	</tables>
+	<columns>
+		<column name="room_srl" var="room_srl" filter="number" notnull="notnull" />
+		<column name="property_srl" var="property_srl" filter="number" notnull="notnull" />
+		<column name="room_type_srl" var="room_type_srl" filter="number" default="0" />
+		<column name="floor" var="floor" filter="number" default="1" />
+		<column name="name" var="name" notnull="notnull" />
+		<column name="position" var="position" filter="number" default="0" />
+		<column name="status" var="status" default="open" />
+		<column name="memo" var="memo" />
+	</columns>
+</query>

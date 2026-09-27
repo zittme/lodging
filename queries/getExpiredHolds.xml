@@ -1,0 +1,17 @@
+<query id="getExpiredHolds" action="select">
+	<tables>
+		<table name="lodging_booking" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="status" var="status" notnull="notnull" />
+		<condition operation="notnull" column="hold_expires" pipe="and" />
+		<condition operation="below" column="hold_expires" var="now" notnull="notnull" pipe="and" />
+	</conditions>
+	<navigation>
+		<index var="sort_index" default="booking_srl" order="asc" />
+		<list_count var="list_count" default="20" />
+	</navigation>
+</query>

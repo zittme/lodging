@@ -1,0 +1,12 @@
+<query id="getCouponByCode" action="select">
+	<tables>
+		<table name="lodging_coupon" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="module_srl" var="module_srl" filter="number" notnull="notnull" />
+		<condition operation="equal" column="code" var="code" notnull="notnull" pipe="and" />
+	</conditions>
+</query>

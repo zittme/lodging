@@ -1,0 +1,38 @@
+@version(2)
+@load('css/lodging.css')
+
+<div class="ldg">
+	<ul class="ldg-props">
+		@foreach($property_list as $property)
+		<li>
+			<a href="{{ getUrl('', 'mid', $module_info->mid, 'act', 'dispLodgingView', 'property_srl', $property->property_srl) }}">
+				@if($property->thumbnail_url)
+				<div class="ldg-prop-thumb" style="background-image:url('{{ $property->thumbnail_url }}')"></div>
+				@endif
+				<div class="ldg-prop-body">
+					<span class="ldg-prop-type">{{ $lang->{'lodging_type_' . $property->property_type} ?? $property->property_type }}</span>
+					<strong class="ldg-prop-title">{{ $property->title }}</strong>
+					@if($property->summary)
+					<p class="ldg-prop-summary">{{ $property->summary }}</p>
+					@endif
+					<p class="ldg-prop-meta">
+						@if($property->review->count > 0)
+						<span class="ldg-score">&#9733; {{ $property->review->average }}</span>
+						<span class="ldg-muted">{{ sprintf($lang->lodging_review_count, number_format($property->review->count)) }}</span>
+						@endif
+						@if($property->address)
+						<span class="ldg-muted">{{ $property->address }}</span>
+						@endif
+					</p>
+				</div>
+				@if($property->min_price > 0)
+				<div class="ldg-prop-price">{{ sprintf($lang->lodging_price_from, number_format($property->min_price)) }}</div>
+				@endif
+			</a>
+		</li>
+		@endforeach
+		@if(!count($property_list))
+		<li class="ldg-empty">{{ $lang->lodging_no_property }}</li>
+		@endif
+	</ul>
+</div>

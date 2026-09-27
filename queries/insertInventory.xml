@@ -1,0 +1,10 @@
+<query id="insertInventory" action="insert">
+	<tables>
+		<table name="lodging_inventory" />
+	</tables>
+	<columns>
+		<column name="inventory_srl" var="inventory_srl" filter="number" notnull="notnull" />
+		<column name="room_type_srl" var="room_type_srl" filter="number" notnull="notnull" />
+		<column name="ymd" var="ymd" notnull="notnull" />
+	</columns>
+</query>

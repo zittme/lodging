@@ -1,0 +1,121 @@
+@version(2)
+@load('css/lodging.css')
+
+<div class="ldg ldg-narrow">
+	<div class="ldg-result-head">
+		<h2 class="ldg-title">
+			@if($booking->status === 'confirmed')
+			{{ $lang->lodging_booking_complete }}
+			@else
+			{{ $lang->{'lodging_status_' . $booking->status} }}
+			@endif
+		</h2>
+		<p class="ldg-code">{{ $lang->lodging_booking_code }} <strong>{{ $booking->booking_code }}</strong></p>
+	</div>
+
+	@if($booking->status === 'hold')
+	<div class="ldg-notice ldg-notice-hold">
+		<strong>{{ $lang->lodging_hold_title }}</strong>
+		<p>
+			@if(!empty($booking->hold_expires))
+			{{ sprintf($lang->lodging_hold_until, zdate($booking->hold_expires, 'Y.m.d H:i')) }}
+			@endif
+			{{ $lang->lodging_hold_help }}
+		</p>
+		@if(!empty($pay_url))
+		<p><a class="ldg-btn ldg-btn-primary" href="{{ $pay_url }}">{{ $lang->lodging_go_pay }}</a></p>
+		@endif
+	</div>
+	@elseif($booking->status === 'expired')
+	<div class="ldg-notice ldg-notice-expired">
+		<p>{{ $lang->lodging_expired_help }}</p>
+	</div>
+	@endif
+
+	<dl class="ldg-detail">
+		<dt>{{ $lang->lodging_property }}</dt>
+		<dd>{{ $property ? $property->title : '-' }}</dd>
+		<dt>{{ $lang->lodging_room_type }}</dt>
+		<dd>{{ $room_type ? $room_type->title : '-' }} ({{ $booking->stay_type === 'dayuse' ? $lang->lodging_dayuse : $lang->lodging_stay }})</dd>
+		<dt>{{ $lang->lodging_checkin }}</dt>
+		<dd>
+			@if($booking->stay_type === 'stay')
+			{{ zdate($booking->checkin_ymd, 'Y.m.d') }} ~ {{ zdate($booking->checkout_ymd, 'Y.m.d') }}
+			@else
+			{{ zdate($booking->checkin_ymd, 'Y.m.d') }}
+			@if($booking->dayuse_start) {{ substr($booking->dayuse_start, 0, 2) }}:{{ substr($booking->dayuse_start, 2, 2) }}@endif
+			@endif
+		</dd>
+		<dt>{{ $lang->lodging_person }}</dt>
+		<dd>{{ $booking->person_count }}</dd>
+		<dt>{{ $lang->lodging_booker_name }}</dt>
+		<dd>{{ $booking->guest_name }} · {{ $booking->guest_phone }}</dd>
+		<dt>{{ $lang->lodging_room_amount }}</dt>
+		<dd>{{ number_format($booking->room_amount) }}{{ $lang->lodging_won }}</dd>
+		@if($booking->discount_amount > 0)
+		<dt>{{ $lang->lodging_discount }}</dt>
+		<dd>-{{ number_format($booking->discount_amount) }}{{ $lang->lodging_won }}</dd>
+		@endif
+		<dt>{{ $lang->lodging_total_amount }}</dt>
+		<dd><strong>{{ number_format($booking->total_amount) }}{{ $lang->lodging_won }}</strong> · {{ $booking->pay_method === 'prepay' ? $lang->lodging_pay_prepay : $lang->lodging_pay_onsite }} ({{ $lang->{'lodging_pay_' . $booking->pay_status} ?? $booking->pay_status }})</dd>
+		@if($booking->status === 'canceled')
+		<dt>{{ $lang->lodging_refund_preview }}</dt>
+		<dd>{{ number_format($booking->refund_amount) }}{{ $lang->lodging_won }}</dd>
+		@endif
+	</dl>
+
+	@if($booking->status === 'confirmed')
+	<div class="ldg-cancelbox">
+		<strong>{{ $lang->lodging_refund_preview }}: {{ number_format($refund_preview) }}{{ $lang->lodging_won }}</strong>
+		<form class="ldg-inline-form" action="{{ getUrl() }}" method="post" onsubmit="return confirm('{{ sprintf($lang->lodging_cancel_confirm, number_format($refund_preview)) }}')">
+			<input type="hidden" name="module" value="lodging" />
+			<input type="hidden" name="act" value="procLodgingCancel" />
+			<input type="hidden" name="mid" value="{{ $module_info->mid }}" />
+			<input type="hidden" name="code" value="{{ $booking->booking_code }}" />
+			<button type="submit" class="ldg-btn ldg-btn-danger">{{ $lang->lodging_cancel_booking }}</button>
+		</form>
+	</div>
+	@elseif($booking->status === 'hold')
+	<div class="ldg-cancelbox">
+		<form class="ldg-inline-form" action="{{ getUrl() }}" method="post" onsubmit="return confirm('{{ $lang->lodging_cancel_hold_confirm }}')">
+			<input type="hidden" name="module" value="lodging" />
+			<input type="hidden" name="act" value="procLodgingCancel" />
+			<input type="hidden" name="mid" value="{{ $module_info->mid }}" />
+			<input type="hidden" name="code" value="{{ $booking->booking_code }}" />
+			<button type="submit" class="ldg-btn ldg-btn-danger">{{ $lang->lodging_cancel_booking }}</button>
+		</form>
+	</div>
+	@endif
+
+	@if($booking->status === 'completed')
+	<section class="ldg-section">
+		<h3>{{ $lang->lodging_write_review }}</h3>
+		<form class="ldg-form" action="{{ getUrl() }}" method="post">
+			<input type="hidden" name="module" value="lodging" />
+			<input type="hidden" name="act" value="procLodgingReview" />
+			<input type="hidden" name="mid" value="{{ $module_info->mid }}" />
+			<input type="hidden" name="code" value="{{ $booking->booking_code }}" />
+			<div class="ldg-row">
+				<label for="ldg_score">{{ $lang->lodging_review_score }}</label>
+				<select id="ldg_score" name="score">
+					@for($i = 5; $i >= 1; $i--)
+					<option value="{{ $i }}">&#9733; {{ $i }}</option>
+					@endfor
+				</select>
+			</div>
+			<div class="ldg-row">
+				<label for="ldg_review">{{ $lang->lodging_review_content }}</label>
+				<textarea id="ldg_review" name="content" rows="4" required></textarea>
+			</div>
+			<div class="ldg-actions">
+				<button type="submit" class="ldg-btn ldg-btn-primary">{{ $lang->lodging_write_review }}</button>
+			</div>
+		</form>
+	</section>
+	@endif
+
+	<p class="ldg-foot-links">
+		<a href="{{ getUrl('', 'mid', $module_info->mid, 'act', 'dispLodgingMy') }}">{{ $lang->lodging_my_bookings }}</a>
+		<a href="{{ getUrl('', 'mid', $module_info->mid, 'act', '') }}">{{ $lang->lodging_property }}</a>
+	</p>
+</div>
