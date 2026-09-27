@@ -18,7 +18,7 @@
 		<strong>{{ $lang->lodging_hold_title }}</strong>
 		<p>
 			@if(!empty($booking->hold_expires))
-			{{ sprintf($lang->lodging_hold_until, zdate($booking->hold_expires, 'Y.m.d H:i')) }}
+			{{ sprintf($lang->lodging_hold_until, zdate($booking->hold_expires, $lang->lodging_datetime_fmt)) }}
 			@endif
 			{{ $lang->lodging_hold_help }}
 		</p>
@@ -40,9 +40,9 @@
 		<dt>{{ $lang->lodging_checkin }}</dt>
 		<dd>
 			@if($booking->stay_type === 'stay')
-			{{ zdate($booking->checkin_ymd, 'Y.m.d') }} ~ {{ zdate($booking->checkout_ymd, 'Y.m.d') }}
+			{{ sprintf($lang->lodging_nights_dates, zdate($booking->checkin_ymd, $lang->lodging_date_fmt), zdate($booking->checkout_ymd, $lang->lodging_date_fmt)) }}
 			@else
-			{{ zdate($booking->checkin_ymd, 'Y.m.d') }}
+			{{ zdate($booking->checkin_ymd, $lang->lodging_date_fmt) }}
 			@if($booking->dayuse_start) {{ substr($booking->dayuse_start, 0, 2) }}:{{ substr($booking->dayuse_start, 2, 2) }}@endif
 			@endif
 		</dd>
@@ -51,22 +51,22 @@
 		<dt>{{ $lang->lodging_booker_name }}</dt>
 		<dd>{{ $booking->guest_name }} · {{ $booking->guest_phone }}</dd>
 		<dt>{{ $lang->lodging_room_amount }}</dt>
-		<dd>{{ number_format($booking->room_amount) }}{{ $lang->lodging_won }}</dd>
+		<dd>{{ sprintf($lang->lodging_money, number_format($booking->room_amount)) }}</dd>
 		@if($booking->discount_amount > 0)
 		<dt>{{ $lang->lodging_discount }}</dt>
-		<dd>-{{ number_format($booking->discount_amount) }}{{ $lang->lodging_won }}</dd>
+		<dd>-{{ sprintf($lang->lodging_money, number_format($booking->discount_amount)) }}</dd>
 		@endif
 		<dt>{{ $lang->lodging_total_amount }}</dt>
-		<dd><strong>{{ number_format($booking->total_amount) }}{{ $lang->lodging_won }}</strong> · {{ $booking->pay_method === 'prepay' ? $lang->lodging_pay_prepay : $lang->lodging_pay_onsite }} ({{ $lang->{'lodging_pay_' . $booking->pay_status} ?? $booking->pay_status }})</dd>
+		<dd><strong>{{ sprintf($lang->lodging_money, number_format($booking->total_amount)) }}</strong> · {{ $booking->pay_method === 'prepay' ? $lang->lodging_pay_prepay : $lang->lodging_pay_onsite }} ({{ $lang->{'lodging_pay_' . $booking->pay_status} ?? $booking->pay_status }})</dd>
 		@if($booking->status === 'canceled')
 		<dt>{{ $lang->lodging_refund_preview }}</dt>
-		<dd>{{ number_format($booking->refund_amount) }}{{ $lang->lodging_won }}</dd>
+		<dd>{{ sprintf($lang->lodging_money, number_format($booking->refund_amount)) }}</dd>
 		@endif
 	</dl>
 
 	@if($booking->status === 'confirmed')
 	<div class="ldg-cancelbox">
-		<strong>{{ $lang->lodging_refund_preview }}: {{ number_format($refund_preview) }}{{ $lang->lodging_won }}</strong>
+		<strong>{{ $lang->lodging_refund_preview }}: {{ sprintf($lang->lodging_money, number_format($refund_preview)) }}</strong>
 		<form class="ldg-inline-form" action="{{ getUrl() }}" method="post" onsubmit="return confirm('{{ sprintf($lang->lodging_cancel_confirm, number_format($refund_preview)) }}')">
 			<input type="hidden" name="module" value="lodging" />
 			<input type="hidden" name="act" value="procLodgingCancel" />

@@ -32,8 +32,8 @@
 				<span class="ldg-code">{{ $booking->booking_code }}</span>
 				<span class="ldg-status ldg-status-{{ $booking->status }}">{{ $lang->{'lodging_status_' . $booking->status} }}</span>
 				@if($booking->status === 'hold')<span class="ldg-muted">{{ $lang->lodging_hold_short }}</span>@endif
-				<span class="ldg-muted">{{ zdate($booking->checkin_ymd, 'Y.m.d') }} · {{ $booking->stay_type === 'dayuse' ? $lang->lodging_dayuse : $lang->lodging_stay }}</span>
-				<span class="ldg-my-amount">{{ number_format($booking->total_amount) }}{{ $lang->lodging_won }}</span>
+				<span class="ldg-muted">{{ zdate($booking->checkin_ymd, $lang->lodging_date_fmt) }} · {{ $booking->stay_type === 'dayuse' ? $lang->lodging_dayuse : $lang->lodging_stay }}</span>
+				<span class="ldg-my-amount">{{ sprintf($lang->lodging_money, number_format($booking->total_amount)) }}</span>
 			</a>
 		</li>
 		@endforeach

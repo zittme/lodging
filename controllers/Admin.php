@@ -4,7 +4,9 @@ namespace Zittme\Modules\Lodging\Controllers;
 
 use Zittme\Modules\Lodging\Models\Booking as BookingModel;
 use Zittme\Modules\Lodging\Models\CancelRule;
+use Zittme\Modules\Lodging\Models\Coupon as CouponModel;
 use Zittme\Modules\Lodging\Models\Inventory;
+use Zittme\Modules\Lodging\Models\Lang;
 use Zittme\Modules\Lodging\Models\Rate;
 use Zittme\Modules\Lodging\Models\Property as PropertyModel;
 use Zittme\Modules\Lodging\Models\RoomType as RoomTypeModel;
@@ -120,7 +122,7 @@ class Admin extends Base
 			$r->property_title = $prop_titles[(int)$r->property_srl] ?? '';
 			$recent_reviews[] = $r;
 		}
-		$top_coupons = $db->query('SELECT title, code, used_count, use_limit, end_ymd, status FROM lodging_coupon ORDER BY used_count DESC, regdate DESC LIMIT 5')->fetchAll();
+		$top_coupons = Lang::localizeAll($db->query('SELECT title, code, used_count, use_limit, end_ymd, status FROM lodging_coupon ORDER BY used_count DESC, regdate DESC LIMIT 5')->fetchAll(), Lang::COUPON_FIELDS);
 
 		\Context::set('today', $today);
 		\Context::set('today_checkins', $today_checkins);
@@ -237,14 +239,14 @@ class Admin extends Base
 		$args = new \stdClass;
 		$args->property_srl = $property_srl;
 		$args->module_srl = $module_srl;
-		$args->title = trim((string)$vars->title);
-		$args->summary = trim((string)$vars->summary);
-		$args->description = (string)$vars->description;
+		$args->title = Lang::fromRequest('title', trim((string)$vars->title));
+		$args->summary = Lang::fromRequest('summary', trim((string)$vars->summary));
+		$args->description = Lang::fromRequest('description', (string)$vars->description);
 		$args->property_type = in_array($vars->property_type, ['hotel', 'motel', 'pension', 'guesthouse', 'resort'], true) ? $vars->property_type : 'motel';
 		// 편의시설은 사전(Amenity::KEYS)에 있는 키만 쉼표로 이어 저장한다
 		$args->amenities = \Zittme\Modules\Lodging\Models\Amenity::format(is_array($vars->amenities ?? null) ? $vars->amenities : []);
-		$args->address = trim((string)$vars->address);
-		$args->address_detail = trim((string)$vars->address_detail);
+		$args->address = Lang::fromRequest('address', trim((string)$vars->address));
+		$args->address_detail = Lang::fromRequest('address_detail', trim((string)$vars->address_detail));
 		$args->phone = trim((string)$vars->phone);
 		$args->notify_email = trim((string)$vars->notify_email);
 		$args->checkin_time = preg_replace('/[^0-9]/', '', (string)$vars->checkin_time) ?: '1500';
@@ -359,6 +361,8 @@ class Admin extends Base
 		{
 			$room_type->grid_count = $grid_counts[(int)$room_type->room_type_srl] ?? 0;
 			$room_type->images = \Zittme\Modules\Lodging\Models\Image::getList((int)$room_type->room_type_srl);
+			$room_type->title_langcode = Lang::codeOf($room_type->title_raw ?? '');
+			$room_type->description_langcode = Lang::codeOf($room_type->description_raw ?? '');
 		}
 
 		\Context::set('property', $property);
@@ -384,8 +388,8 @@ class Admin extends Base
 		$args->room_type_srl = (int)$vars->room_type_srl;
 		$args->property_srl = (int)$property->property_srl;
 		$args->module_srl = (int)$property->module_srl;
-		$args->title = trim((string)$vars->title);
-		$args->description = trim((string)$vars->description);
+		$args->title = Lang::fromRequest('title', trim((string)$vars->title));
+		$args->description = Lang::fromRequest('description', trim((string)$vars->description));
 		$args->total_rooms = max(1, (int)$vars->total_rooms);
 		$args->std_person = max(1, (int)$vars->std_person);
 		$args->max_person = max($args->std_person, (int)$vars->max_person);
@@ -783,7 +787,7 @@ class Admin extends Base
 		$args = new \stdClass;
 		$output = executeQueryArray('lodging.getCouponList', $args);
 
-		\Context::set('coupon_list', $output->toBool() && is_array($output->data) ? $output->data : []);
+		\Context::set('coupon_list', $output->toBool() && is_array($output->data) ? Lang::localizeAll($output->data, Lang::COUPON_FIELDS) : []);
 		\Context::set('instance_list', $this->getInstanceList());
 		\Context::set('property_list', $this->getAllProperties());
 
@@ -812,7 +816,7 @@ class Admin extends Base
 		$args->coupon_srl = (int)$vars->coupon_srl;
 		$args->module_srl = $module_srl;
 		$args->property_srl = (int)$vars->property_srl;
-		$args->title = trim((string)$vars->title);
+		$args->title = Lang::fromRequest('title', trim((string)$vars->title));
 		$args->code = strtoupper(preg_replace('/[^A-Za-z0-9]/', '', (string)$vars->code));
 		$args->discount_type = $vars->discount_type === 'rate' ? 'rate' : 'amount';
 		$args->discount_value = max(0, (int)$vars->discount_value);
@@ -861,6 +865,44 @@ class Admin extends Base
 
 		$this->setMessage('success_deleted');
 		$this->setRedirectUrl(getNotEncodedUrl('', 'module', '', 'mid', '', 'act', 'dispLodgingConsole', 'p', 'coupons'));
+	}
+
+	/**
+	 * 다국어 코드 목록 — 이미 만들어 둔 코드를 골라 쓰기 위한 검색.
+	 */
+	public function procLodgingAdminGetLangCodes()
+	{
+		$rows = [];
+		foreach (Lang::search((string)\Context::get('keyword'), 40) as $row)
+		{
+			$rows[] = ['code' => $row->code, 'value' => $row->value];
+		}
+		$this->add('codes', $rows);
+	}
+
+	/**
+	 * 다국어 코드 저장.
+	 */
+	public function procLodgingAdminSaveLangCode()
+	{
+		$values = \Context::get('values');
+		$code = Lang::save((string)\Context::get('code'), is_array($values) ? $values : []);
+		if ($code === '')
+		{
+			return new \BaseObject(-1, lang('lodging.lodging_lang_empty_values'));
+		}
+		$this->add('code', $code);
+		$this->add('value', Lang::display($code));
+	}
+
+	/**
+	 * 다국어 코드 하나의 언어별 값.
+	 */
+	public function procLodgingAdminGetLangCode()
+	{
+		$code = Lang::filterCode((string)\Context::get('code'));
+		$this->add('code', $code);
+		$this->add('values', Lang::values($code));
 	}
 
 	/**

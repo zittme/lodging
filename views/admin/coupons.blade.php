@@ -1,4 +1,5 @@
 @include('_tabs')
+@include('_langfield_assets')
 
 <section class="section">
 	<h2>{{ $lang->lodging_coupon }}</h2>
@@ -77,7 +78,7 @@
 			<label class="x_control-label" for="ldg_cp_title">{{ $lang->lodging_coupon }}</label>
 			<div class="x_controls">
 				<span class="x_input-append">
-					<input type="text" id="ldg_cp_title" name="title" required />
+					<span class="zlf-row-wrap" style="display:inline-flex"><input type="text" id="ldg_cp_title" name="title" required />@include('_langfield', ['lf_name' => 'title', 'lf_value' => ''])</span>
 					<input type="text" name="code" placeholder="{{ $lang->lodging_coupon_code }}" />
 				</span>
 			</div>

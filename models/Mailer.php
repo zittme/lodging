@@ -49,7 +49,7 @@ class Mailer
 		$subject = sprintf('[%s] %s - %s', $property->title, lang('lodging.mail_canceled'), $booking->booking_code);
 		$body = self::renderBooking($booking, $property, $room_type);
 		$body .= '<p style="margin:14px 0 0;font-size:14px;"><strong>' . htmlspecialchars(lang('lodging.lodging_refund_preview'), ENT_QUOTES, 'UTF-8') . ':</strong> '
-			. number_format($refund) . lang('lodging.mail_won') . '</p>';
+			. Lang::money($refund) . '</p>';
 
 		foreach (self::parseEmails((string)($property->notify_email ?? '')) as $email)
 		{
@@ -74,8 +74,8 @@ class Mailer
 	{
 		$is_stay = $booking->stay_type !== 'dayuse';
 		$period = $is_stay
-			? zdate($booking->checkin_ymd, 'Y.m.d') . ' ~ ' . zdate($booking->checkout_ymd, 'Y.m.d')
-			: zdate($booking->checkin_ymd, 'Y.m.d')
+			? sprintf(lang('lodging.lodging_nights_dates'), Lang::date($booking->checkin_ymd), Lang::date($booking->checkout_ymd))
+			: Lang::date($booking->checkin_ymd)
 				. (($booking->dayuse_start ?? '') !== '' ? ' ' . substr($booking->dayuse_start, 0, 2) . ':' . substr($booking->dayuse_start, 2, 2) : '');
 
 		$rows = [
@@ -85,7 +85,7 @@ class Mailer
 			[lang('lodging.lodging_checkin'), $period],
 			[lang('lodging.lodging_person'), (string)$booking->person_count],
 			[lang('lodging.lodging_booker_name'), $booking->guest_name . ' / ' . $booking->guest_phone],
-			[lang('lodging.lodging_total_amount'), number_format($booking->total_amount) . lang('lodging.mail_won')
+			[lang('lodging.lodging_total_amount'), Lang::money($booking->total_amount)
 				. ' (' . ($booking->pay_method === 'prepay' ? lang('lodging.lodging_pay_prepay') : lang('lodging.lodging_pay_onsite')) . ')'],
 		];
 		if (trim((string)$booking->request_memo) !== '')

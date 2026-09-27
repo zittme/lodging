@@ -640,7 +640,7 @@ class Front extends Base
 				'source_code' => $booking_code,
 				'member_srl' => $member_srl,
 				'amount' => $total,
-				'title' => sprintf('%s %s %s', $property->title, $room_type->title, $checkin),
+				'title' => sprintf('%s %s %s', $property->title, $room_type->title, \Zittme\Modules\Lodging\Models\Lang::date($checkin)),
 				'payer' => ['name' => $guest_name, 'phone' => $guest_phone, 'email' => $args->guest_email],
 				'return_url' => $result_url,
 			]);
@@ -830,6 +830,31 @@ class Front extends Base
 		if ($address === '')
 		{
 			return '';
+		}
+		// 다국어로 번역된 주소는 한글 규칙이 맞지 않는다. 시·군 이름만 골라낸다
+		if (!preg_match('/[\x{AC00}-\x{D7A3}]/u', $address))
+		{
+			if (preg_match('/\b(Seoul|Busan|Daegu|Incheon|Gwangju|Daejeon|Ulsan|Sejong|Jeju)\b/i', $address, $m))
+			{
+				return ucfirst(strtolower($m[1]));
+			}
+			if (preg_match('/([A-Za-z]+)-(?:si|gun)\b/', $address, $m))
+			{
+				return $m[1];
+			}
+			if (preg_match('/^\s*([^\s,]+?)(?:特別市|特别市|広域市|廣域市|广域市|特別自治市|特别自治市)/u', $address, $m))
+			{
+				return $m[1];
+			}
+			if (preg_match('/^\s*(済州|濟州|济州)/u', $address, $m))
+			{
+				return $m[1];
+			}
+			if (preg_match('/道\s*([^\s,道]{1,6}?)[市郡]/u', $address, $m))
+			{
+				return $m[1];
+			}
+			return trim((string)explode(',', $address)[0]);
 		}
 		$parts = preg_split('/\s+/', $address);
 		$first = (string)($parts[0] ?? '');

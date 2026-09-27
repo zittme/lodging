@@ -443,3 +443,22 @@ $lang->lodging_rule_checkin = '체크인';
 $lang->lodging_rule_days_before = '일 전까지';
 $lang->lodging_rule_refund = '% 환불';
 $lang->lodging_go_pay = '결제하러 가기';
+
+// 다국어·표시 형식
+$lang->lodging_money = '%s원';
+$lang->lodging_date_fmt = 'Y.m.d';
+$lang->lodging_datetime_fmt = 'Y.m.d H:i';
+$lang->lodging_lang_link = '다국어 문구 연결';
+$lang->lodging_lang_tab_pick = '등록된 문구';
+$lang->lodging_lang_tab_new = '새로 만들기';
+$lang->lodging_lang_search = '문구 또는 코드 검색';
+$lang->lodging_lang_loading = '불러오는 중…';
+$lang->lodging_lang_one_only = '사이트에 켜둔 언어가 하나뿐입니다. 관리자 > 기본 설정에서 언어를 더 켜면 여기에 함께 나옵니다.';
+$lang->lodging_lang_save_use = '저장하고 사용';
+$lang->lodging_lang_linked = '연결됨';
+$lang->lodging_lang_edit = '고치기';
+$lang->lodging_lang_unlink = '연결 해제';
+$lang->lodging_lang_empty = '등록된 문구가 없습니다. 새로 만들어 주세요.';
+$lang->lodging_lang_list_failed = '목록을 불러오지 못했습니다.';
+$lang->lodging_lang_save_failed = '저장하지 못했습니다.';
+$lang->lodging_lang_empty_values = '언어별 문구를 하나 이상 입력해 주세요.';

@@ -68,6 +68,9 @@
 		<action name="procLodgingAdminInsertCoupon" class="Controllers\Admin" permission="manager" />
 		<action name="procLodgingAdminDeleteCoupon" class="Controllers\Admin" permission="manager" />
 		<action name="procLodgingAdminReviewReply" class="Controllers\Admin" permission="manager" />
+		<action name="procLodgingAdminGetLangCodes" class="Controllers\Admin" permission="manager" />
+		<action name="procLodgingAdminGetLangCode" class="Controllers\Admin" permission="manager" />
+		<action name="procLodgingAdminSaveLangCode" class="Controllers\Admin" permission="manager" />
 	</actions>
 
 	<classes>

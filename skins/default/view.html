@@ -74,7 +74,7 @@
 			</div>
 			<div class="ldg-room-cta">
 				@if($room_type->available)
-				<span class="ldg-room-price">{{ number_format($room_type->price) }}<small>{{ $lang->lodging_won }}@if($stay_type === 'stay' && $nights > 1) / {{ sprintf($lang->lodging_nights, $nights) }}@endif</small></span>
+				<span class="ldg-room-price">{{ sprintf($lang->lodging_money, number_format($room_type->price)) }}<small>@if($stay_type === 'stay' && $nights > 1) / {{ sprintf($lang->lodging_nights, $nights) }}@endif</small></span>
 				<a class="ldg-btn ldg-btn-primary" href="{{ getUrl('', 'mid', $module_info->mid, 'act', 'dispLodgingBook', 'property_srl', $property->property_srl, 'room_type_srl', $room_type->room_type_srl, 'stay_type', $stay_type, 'checkin', $checkin, 'checkout', $checkout) }}">{{ $lang->lodging_book_now }}</a>
 				@elseif($room_type->unavailable_reason === 'no_dayuse')
 				<span class="ldg-soldout">{{ $lang->lodging_no_dayuse }}</span>
@@ -124,7 +124,7 @@
 				<p class="ldg-review-head">
 					<strong>{{ $review->writer_name }}</strong>
 					<span class="ldg-score">&#9733; {{ $review->score }}</span>
-					<span class="ldg-muted">{{ zdate($review->regdate, 'Y.m.d') }}</span>
+					<span class="ldg-muted">{{ zdate($review->regdate, $lang->lodging_date_fmt) }}</span>
 				</p>
 				<p class="ldg-review-body">{{ $review->content }}</p>
 				@if($review->reply)

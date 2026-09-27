@@ -24,7 +24,7 @@ class RoomType
 		}
 
 		$output = executeQueryArray('lodging.getRoomTypeList', $args);
-		return $output->toBool() && is_array($output->data) ? $output->data : [];
+		return $output->toBool() && is_array($output->data) ? Lang::localizeAll($output->data, Lang::ROOM_TYPE_FIELDS) : [];
 	}
 
 	/**
@@ -45,7 +45,7 @@ class RoomType
 
 		$output = executeQuery('lodging.getRoomType', $args);
 		$row = ($output->toBool() && $output->data) ? $output->data : null;
-		return (is_array($row) ? (count($row) ? reset($row) : null) : $row);
+		return Lang::localize(is_array($row) ? (count($row) ? reset($row) : null) : $row, Lang::ROOM_TYPE_FIELDS);
 	}
 
 	/**

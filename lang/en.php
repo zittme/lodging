@@ -58,7 +58,7 @@ $lang->lodging_room_amount = 'Room rate';
 $lang->lodging_discount = 'Discount';
 $lang->lodging_total_amount = 'Total';
 $lang->lodging_cancel_policy = 'Cancellation policy';
-$lang->lodging_cancel_rule_row = '%d%% refund until %d days before check-in';
+$lang->lodging_cancel_rule_row = '%2$d%% refund until %1$d days before check-in';
 $lang->lodging_cancel_rule_today = '%d%% refund for same-day cancellation';
 $lang->lodging_no_cancel_rule = 'No cancellation rules. Full refund when canceled before check-in.';
 
@@ -442,3 +442,22 @@ $lang->lodging_rule_checkin = 'Up to';
 $lang->lodging_rule_days_before = 'days before check-in:';
 $lang->lodging_rule_refund = '% refund';
 $lang->lodging_go_pay = 'Continue to payment';
+
+// Translations and display formats
+$lang->lodging_money = 'KRW %s';
+$lang->lodging_date_fmt = 'M j, Y';
+$lang->lodging_datetime_fmt = 'M j, Y H:i';
+$lang->lodging_lang_link = 'Link a translated phrase';
+$lang->lodging_lang_tab_pick = 'Saved phrases';
+$lang->lodging_lang_tab_new = 'Create new';
+$lang->lodging_lang_search = 'Search a phrase or code';
+$lang->lodging_lang_loading = 'Loading…';
+$lang->lodging_lang_one_only = 'Only one language is turned on for this site. Turn on more under Admin > General settings and they will appear here.';
+$lang->lodging_lang_save_use = 'Save and use';
+$lang->lodging_lang_linked = 'Linked';
+$lang->lodging_lang_edit = 'Edit';
+$lang->lodging_lang_unlink = 'Unlink';
+$lang->lodging_lang_empty = 'No phrases yet. Please create one.';
+$lang->lodging_lang_list_failed = 'The list could not be loaded.';
+$lang->lodging_lang_save_failed = 'Could not save.';
+$lang->lodging_lang_empty_values = 'Enter the phrase in at least one language.';

@@ -23,7 +23,7 @@ class Coupon
 
 		$output = executeQuery('lodging.getCoupon', $args);
 		$row = ($output->toBool() && $output->data) ? $output->data : null;
-		return (is_array($row) ? (count($row) ? reset($row) : null) : $row);
+		return Lang::localize(is_array($row) ? (count($row) ? reset($row) : null) : $row, Lang::COUPON_FIELDS);
 	}
 
 	/**
@@ -41,7 +41,7 @@ class Coupon
 
 		$output = executeQuery('lodging.getCouponByCode', $args);
 		$row = ($output->toBool() && $output->data) ? $output->data : null;
-		return (is_array($row) ? (count($row) ? reset($row) : null) : $row);
+		return Lang::localize(is_array($row) ? (count($row) ? reset($row) : null) : $row, Lang::COUPON_FIELDS);
 	}
 
 	/**
@@ -134,7 +134,7 @@ class Coupon
 			if (($coupon->start_ymd ?? '') !== '' && $today < $coupon->start_ymd) { continue; }
 			if (($coupon->end_ymd ?? '') !== '' && $today > $coupon->end_ymd) { continue; }
 			if ((int)$coupon->use_limit > 0 && (int)$coupon->used_count >= (int)$coupon->use_limit) { continue; }
-			$list[] = $coupon;
+			$list[] = Lang::localize($coupon, Lang::COUPON_FIELDS);
 		}
 		return $list;
 	}

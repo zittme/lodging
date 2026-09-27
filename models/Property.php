@@ -24,7 +24,7 @@ class Property
 		}
 
 		$output = executeQueryArray('lodging.getPropertyList', $args);
-		return $output->toBool() && is_array($output->data) ? $output->data : [];
+		return $output->toBool() && is_array($output->data) ? Lang::localizeAll($output->data, Lang::PROPERTY_FIELDS) : [];
 	}
 
 	/**
@@ -45,7 +45,7 @@ class Property
 
 		$output = executeQuery('lodging.getProperty', $args);
 		$row = ($output->toBool() && $output->data) ? $output->data : null;
-		return (is_array($row) ? (count($row) ? reset($row) : null) : $row);
+		return Lang::localize(is_array($row) ? (count($row) ? reset($row) : null) : $row, Lang::PROPERTY_FIELDS);
 	}
 
 	/**

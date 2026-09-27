@@ -8,14 +8,14 @@
 		<strong>{{ $property->title }} · {{ $room_type->title }}</strong>
 		<span>
 			@if($stay_type === 'stay')
-			{{ zdate($checkin, 'Y.m.d') }} ~ {{ zdate($checkout, 'Y.m.d') }} ({{ sprintf($lang->lodging_nights, $nights) }})
+			{{ sprintf($lang->lodging_nights_dates, zdate($checkin, $lang->lodging_date_fmt), zdate($checkout, $lang->lodging_date_fmt)) }} ({{ sprintf($lang->lodging_nights, $nights) }})
 			@else
-			{{ $lang->lodging_dayuse }} · {{ zdate($checkin, 'Y.m.d') }} · {{ sprintf($lang->lodging_dayuse_hours, $room_type->dayuse_hours) }}
+			{{ $lang->lodging_dayuse }} · {{ zdate($checkin, $lang->lodging_date_fmt) }} · {{ sprintf($lang->lodging_dayuse_hours, $room_type->dayuse_hours) }}
 			@endif
 		</span>
-		<span class="ldg-room-price" data-ldg-price data-base="{{ (int)$room_amount }}" data-std="{{ (int)$room_type->std_person }}" data-extra="{{ (int)$extra_person_total }}"><b data-ldg-price-num>{{ number_format($room_amount) }}</b><small>{{ $lang->lodging_won }}</small></span>
+		<span class="ldg-room-price" data-ldg-price data-base="{{ (int)$room_amount }}" data-std="{{ (int)$room_type->std_person }}" data-extra="{{ (int)$extra_person_total }}">{!! sprintf(escape($lang->lodging_money), '<b data-ldg-price-num>' . number_format($room_amount) . '</b>') !!}</span>
 		@if((int)($room_quote['long_stay_discount'] ?? 0) > 0)
-		<span class="ldg-quote-line">{{ $lang->lodging_long_stay_discount }} -{{ number_format($room_quote['long_stay_discount']) }}{{ $lang->lodging_won }}</span>
+		<span class="ldg-quote-line">{{ $lang->lodging_long_stay_discount }} -{{ sprintf($lang->lodging_money, number_format($room_quote['long_stay_discount'])) }}</span>
 		@endif
 		@if((int)$extra_person_total > 0)
 		<span class="ldg-quote-line">{{ sprintf($lang->lodging_extra_person_note, (int)$room_type->std_person, number_format($extra_person_total)) }}</span>
@@ -121,7 +121,7 @@
 		</div>
 
 		<div class="ldg-actions">
-			<button type="submit" class="ldg-btn ldg-btn-primary ldg-btn-lg">{{ $lang->lodging_book_now }} · <span data-ldg-price-num>{{ number_format($room_amount) }}</span>{{ $lang->lodging_won }}</button>
+			<button type="submit" class="ldg-btn ldg-btn-primary ldg-btn-lg">{{ $lang->lodging_book_now }} · {!! sprintf(escape($lang->lodging_money), '<span data-ldg-price-num>' . number_format($room_amount) . '</span>') !!}</button>
 		</div>
 	</form>
 </div>

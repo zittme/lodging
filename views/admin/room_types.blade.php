@@ -1,4 +1,5 @@
 @include('_tabs')
+@include('_langfield_assets')
 
 <section class="section">
 	<h2>{{ $property->title }} — {{ $lang->lodging_room_type }}</h2>
@@ -56,7 +57,7 @@
 				</td>
 				<td class="nowr">{{ $room_type->status === 'open' ? $lang->lodging_status_open : $lang->lodging_status_closed }}</td>
 				<td class="nowr">
-					<button type="button" class="x_btn ldg-edit-type" data-room-type='{{ json_encode(["room_type_srl" => (int)$room_type->room_type_srl, "title" => $room_type->title, "description" => $room_type->description, "total_rooms" => (int)$room_type->total_rooms, "std_person" => (int)$room_type->std_person, "max_person" => (int)$room_type->max_person, "stay_price_weekday" => (int)$room_type->stay_price_weekday, "stay_price_fri" => (int)$room_type->stay_price_fri, "stay_price_sat" => (int)$room_type->stay_price_sat, "use_dayuse" => $room_type->use_dayuse, "dayuse_hours" => (int)$room_type->dayuse_hours, "dayuse_open" => $room_type->dayuse_open, "dayuse_close" => $room_type->dayuse_close, "dayuse_price_weekday" => (int)$room_type->dayuse_price_weekday, "dayuse_price_fri" => (int)$room_type->dayuse_price_fri, "dayuse_price_sat" => (int)$room_type->dayuse_price_sat, "min_nights" => (int)($room_type->min_nights ?: 1), "max_nights" => (int)($room_type->max_nights ?: 30), "extra_person_price" => (int)$room_type->extra_person_price, "long_stay_nights" => (int)$room_type->long_stay_nights, "long_stay_rate" => (int)$room_type->long_stay_rate, "status" => $room_type->status, "list_order" => (int)$room_type->list_order], JSON_UNESCAPED_UNICODE | JSON_HEX_APOS | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_QUOT) }}'>{{ $lang->cmd_modify }}</button>
+					<button type="button" class="x_btn ldg-edit-type" data-room-type='{{ json_encode(["room_type_srl" => (int)$room_type->room_type_srl, "title" => $room_type->title, "title_langcode" => $room_type->title_langcode, "description" => $room_type->description, "description_langcode" => $room_type->description_langcode, "total_rooms" => (int)$room_type->total_rooms, "std_person" => (int)$room_type->std_person, "max_person" => (int)$room_type->max_person, "stay_price_weekday" => (int)$room_type->stay_price_weekday, "stay_price_fri" => (int)$room_type->stay_price_fri, "stay_price_sat" => (int)$room_type->stay_price_sat, "use_dayuse" => $room_type->use_dayuse, "dayuse_hours" => (int)$room_type->dayuse_hours, "dayuse_open" => $room_type->dayuse_open, "dayuse_close" => $room_type->dayuse_close, "dayuse_price_weekday" => (int)$room_type->dayuse_price_weekday, "dayuse_price_fri" => (int)$room_type->dayuse_price_fri, "dayuse_price_sat" => (int)$room_type->dayuse_price_sat, "min_nights" => (int)($room_type->min_nights ?: 1), "max_nights" => (int)($room_type->max_nights ?: 30), "extra_person_price" => (int)$room_type->extra_person_price, "long_stay_nights" => (int)$room_type->long_stay_nights, "long_stay_rate" => (int)$room_type->long_stay_rate, "status" => $room_type->status, "list_order" => (int)$room_type->list_order], JSON_UNESCAPED_UNICODE | JSON_HEX_APOS | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_QUOT) }}'>{{ $lang->cmd_modify }}</button>
 					<form action="./" method="post" style="display:inline" onsubmit="return confirm('{{ $lang->lodging_delete_type_confirm }}')">
 						<input type="hidden" name="module" value="lodging" />
 						<input type="hidden" name="act" value="procLodgingAdminDeleteRoomType" />
@@ -85,13 +86,13 @@
 		<div class="x_control-group">
 			<label class="x_control-label" for="ldg_rt_title">{{ $lang->lodging_room_type }}</label>
 			<div class="x_controls">
-				<input type="text" id="ldg_rt_title" name="title" class="x_full-width" required />
+				<div class="zlf-row-wrap"><input type="text" id="ldg_rt_title" name="title" class="x_full-width" required />@include('_langfield', ['lf_name' => 'title', 'lf_value' => ''])</div>
 			</div>
 		</div>
 		<div class="x_control-group">
 			<label class="x_control-label" for="ldg_rt_desc">{{ $lang->lodging_intro }}</label>
 			<div class="x_controls">
-				<input type="text" id="ldg_rt_desc" name="description" class="x_full-width" />
+				<div class="zlf-row-wrap"><input type="text" id="ldg_rt_desc" name="description" class="x_full-width" />@include('_langfield', ['lf_name' => 'description', 'lf_value' => ''])</div>
 			</div>
 		</div>
 		<div class="x_control-group">
@@ -189,6 +190,11 @@
 	var resetBtn = document.getElementById('ldg-type-reset');
 	var addLabel = title.textContent;
 
+	function syncLang() {
+		if (!window.zlfSync) { return; }
+		form.querySelectorAll('[data-lf-open]').forEach(function(button) { window.zlfSync(button); });
+	}
+
 	function fill(data) {
 		Object.keys(data).forEach(function(key) {
 			var field = form.elements[key];
@@ -205,6 +211,7 @@
 	document.querySelectorAll('.ldg-edit-type').forEach(function(button) {
 		button.addEventListener('click', function() {
 			fill(JSON.parse(button.dataset.roomType));
+			syncLang();
 			title.textContent = form.elements.title.value;
 			resetBtn.hidden = false;
 			form.scrollIntoView({ behavior: 'smooth' });
@@ -214,6 +221,9 @@
 	resetBtn.addEventListener('click', function() {
 		form.reset();
 		form.elements.room_type_srl.value = 0;
+		form.elements.title_langcode.value = '';
+		form.elements.description_langcode.value = '';
+		syncLang();
 		title.textContent = addLabel;
 		resetBtn.hidden = true;
 	});

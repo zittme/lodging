@@ -1,4 +1,5 @@
 @include('_tabs')
+@include('_langfield_assets')
 
 <section class="section">
 	<h2>{{ $property ? $property->title : $lang->lodging_admin_property_add }}</h2>
@@ -29,7 +30,7 @@
 		<div class="x_control-group">
 			<label class="x_control-label" for="ldg_title">{{ $lang->lodging_property }}</label>
 			<div class="x_controls">
-				<input type="text" id="ldg_title" name="title" value="{{ $property ? $property->title : '' }}" class="x_full-width" required />
+				<div class="zlf-row-wrap"><input type="text" id="ldg_title" name="title" value="{{ $property ? $property->title : '' }}" class="x_full-width" required />@include('_langfield', ['lf_name' => 'title', 'lf_value' => $property ? ($property->title_raw ?? '') : ''])</div>
 			</div>
 		</div>
 
@@ -63,22 +64,22 @@
 		<div class="x_control-group">
 			<label class="x_control-label" for="ldg_summary">{{ $lang->lodging_summary }}</label>
 			<div class="x_controls">
-				<input type="text" id="ldg_summary" name="summary" value="{{ $property ? $property->summary : '' }}" class="x_full-width" maxlength="250" />
+				<div class="zlf-row-wrap"><input type="text" id="ldg_summary" name="summary" value="{{ $property ? $property->summary : '' }}" class="x_full-width" maxlength="250" />@include('_langfield', ['lf_name' => 'summary', 'lf_value' => $property ? ($property->summary_raw ?? '') : ''])</div>
 			</div>
 		</div>
 
 		<div class="x_control-group">
 			<label class="x_control-label" for="ldg_description">{{ $lang->lodging_intro }}</label>
 			<div class="x_controls">
-				<textarea id="ldg_description" name="description" rows="5" class="x_full-width">{{ $property ? $property->description : '' }}</textarea>
+				<div class="zlf-row-wrap"><textarea id="ldg_description" name="description" rows="5" class="x_full-width">{{ $property ? $property->description : '' }}</textarea>@include('_langfield', ['lf_name' => 'description', 'lf_value' => $property ? ($property->description_raw ?? '') : ''])</div>
 			</div>
 		</div>
 
 		<div class="x_control-group">
 			<label class="x_control-label" for="ldg_address">{{ $lang->lodging_address }}</label>
 			<div class="x_controls">
-				<input type="text" id="ldg_address" name="address" value="{{ $property ? $property->address : '' }}" class="x_full-width" />
-				<input type="text" name="address_detail" value="{{ $property ? $property->address_detail : '' }}" class="x_full-width" style="margin-top:6px" />
+				<div class="zlf-row-wrap"><input type="text" id="ldg_address" name="address" value="{{ $property ? $property->address : '' }}" class="x_full-width" />@include('_langfield', ['lf_name' => 'address', 'lf_value' => $property ? ($property->address_raw ?? '') : ''])</div>
+				<div class="zlf-row-wrap" style="margin-top:6px"><input type="text" name="address_detail" value="{{ $property ? $property->address_detail : '' }}" class="x_full-width" />@include('_langfield', ['lf_name' => 'address_detail', 'lf_value' => $property ? ($property->address_detail_raw ?? '') : ''])</div>
 			</div>
 		</div>
 
