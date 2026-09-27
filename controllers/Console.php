@@ -24,6 +24,7 @@ class Console extends Admin
 		'rooms' => 'dispLodgingAdminRooms',
 		'reviews' => 'dispLodgingAdminReviews',
 		'coupons' => 'dispLodgingAdminCoupons',
+		'map' => 'dispLodgingAdminMap',
 	];
 
 	/**

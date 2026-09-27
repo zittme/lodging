@@ -461,3 +461,17 @@ $lang->lodging_lang_empty = 'Фраз пока нет. Создайте нову
 $lang->lodging_lang_list_failed = 'Не удалось загрузить список.';
 $lang->lodging_lang_save_failed = 'Не удалось сохранить.';
 $lang->lodging_lang_empty_values = 'Введите текст хотя бы на одном языке.';
+
+// Map links
+$lang->lodging_map_links = 'Ссылки на карты';
+$lang->lodging_map_mode = 'Карта';
+$lang->about_lodging_map_mode = 'В автоматическом режиме посетителям на корейском показываются Kakao Map и Naver Map, остальным — Google Карты. Ссылки открываются в новом окне.';
+$lang->lodging_map_services = 'Показываемые карты';
+$lang->lodging_map_auto = 'Автоматически';
+$lang->lodging_map_multi = 'Несколько карт';
+$lang->lodging_map_kakao = 'Kakao Map';
+$lang->lodging_map_naver = 'Naver Map';
+$lang->lodging_map_google = 'Google Карты';
+$lang->lodging_map_osm = 'OpenStreetMap';
+$lang->lodging_map_view = 'Открыть карту';
+$lang->lodging_map_route = 'Маршрут';

@@ -461,3 +461,17 @@ $lang->lodging_lang_empty = 'Chưa có cụm từ nào. Hãy tạo mới.';
 $lang->lodging_lang_list_failed = 'Không tải được danh sách.';
 $lang->lodging_lang_save_failed = 'Không thể lưu.';
 $lang->lodging_lang_empty_values = 'Hãy nhập nội dung bằng ít nhất một ngôn ngữ.';
+
+// Map links
+$lang->lodging_map_links = 'Liên kết bản đồ';
+$lang->lodging_map_mode = 'Bản đồ';
+$lang->about_lodging_map_mode = 'Tự động: khách dùng tiếng Hàn thấy Kakao Map và Naver Map, khách khác thấy Google Maps. Liên kết mở trong cửa sổ mới.';
+$lang->lodging_map_services = 'Bản đồ hiển thị';
+$lang->lodging_map_auto = 'Tự động';
+$lang->lodging_map_multi = 'Nhiều bản đồ';
+$lang->lodging_map_kakao = 'Kakao Map';
+$lang->lodging_map_naver = 'Naver Map';
+$lang->lodging_map_google = 'Google Maps';
+$lang->lodging_map_osm = 'OpenStreetMap';
+$lang->lodging_map_view = 'Xem bản đồ';
+$lang->lodging_map_route = 'Chỉ đường';

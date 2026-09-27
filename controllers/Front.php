@@ -401,6 +401,7 @@ class Front extends Base
 		$property->amenity_list = \Zittme\Modules\Lodging\Models\Amenity::labels($property->amenities ?? '');
 
 		\Context::set('property', $property);
+		\Context::set('map_links', \Zittme\Modules\Lodging\Models\Map::links($property));
 		\Context::set('room_types', $room_types);
 		\Context::set('stay_type', $stay_type);
 		\Context::set('checkin', $checkin);

@@ -461,3 +461,17 @@ $lang->lodging_lang_empty = '登録された文言がありません。新しく
 $lang->lodging_lang_list_failed = '一覧を読み込めませんでした。';
 $lang->lodging_lang_save_failed = '保存できませんでした。';
 $lang->lodging_lang_empty_values = '少なくとも1つの言語で文言を入力してください。';
+
+// Map links
+$lang->lodging_map_links = '地図リンク';
+$lang->lodging_map_mode = '地図';
+$lang->about_lodging_map_mode = '自動では、韓国語の訪問者にはカカオマップとNAVER地図、それ以外の言語にはGoogle マップを表示します。リンクは新しいウィンドウで開きます。';
+$lang->lodging_map_services = '表示する地図';
+$lang->lodging_map_auto = '自動';
+$lang->lodging_map_multi = '複数の地図';
+$lang->lodging_map_kakao = 'カカオマップ';
+$lang->lodging_map_naver = 'NAVER地図';
+$lang->lodging_map_google = 'Google マップ';
+$lang->lodging_map_osm = 'OpenStreetMap';
+$lang->lodging_map_view = '地図を見る';
+$lang->lodging_map_route = 'ルート検索';

@@ -113,6 +113,7 @@ if (isset($property) && is_object($property)) { $ldc_prop = (int)$property->prop
 		<a href="{{ getUrl('', 'module', '', 'mid', '', 'act', 'dispLodgingConsole', 'p', 'dashboard') }}" class="{{ $ldc_p === 'dashboard' ? 'is-active' : '' }}">{{ $lang->lodging_admin_dashboard }}</a>
 		<a href="{{ getUrl('', 'module', '', 'mid', '', 'act', 'dispLodgingConsole', 'p', 'properties') }}" class="{{ in_array($ldc_p, ['properties', 'property_edit'], true) ? 'is-active' : '' }}">{{ $lang->lodging_admin_properties }}</a>
 		<a href="{{ getUrl('', 'module', '', 'mid', '', 'act', 'dispLodgingConsole', 'p', 'coupons') }}" class="{{ $ldc_p === 'coupons' ? 'is-active' : '' }}">{{ $lang->lodging_coupon }}</a>
+		<a href="{{ getUrl('', 'module', '', 'mid', '', 'act', 'dispLodgingConsole', 'p', 'map') }}" class="{{ $ldc_p === 'map' ? 'is-active' : '' }}">{{ $lang->lodging_map_links }}</a>
 
 		<div class="ldc-nav-sep">{{ $lang->lodging_console_property_ops }}</div>
 		@foreach(['bookings' => $lang->lodging_admin_bookings, 'calendar' => $lang->lodging_admin_calendar, 'room_types' => $lang->lodging_room_type, 'rooms' => $lang->lodging_admin_rooms, 'reviews' => $lang->lodging_review] as $ldc_key => $ldc_label)

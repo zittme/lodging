@@ -461,3 +461,17 @@ $lang->lodging_lang_empty = 'Одоогоор өгүүлбэр алга. Шин�
 $lang->lodging_lang_list_failed = 'Жагсаалтыг ачаалж чадсангүй.';
 $lang->lodging_lang_save_failed = 'Хадгалж чадсангүй.';
 $lang->lodging_lang_empty_values = 'Дор хаяж нэг хэлээр текст оруулна уу.';
+
+// Map links
+$lang->lodging_map_links = 'Газрын зургийн холбоос';
+$lang->lodging_map_mode = 'Газрын зураг';
+$lang->about_lodging_map_mode = 'Автомат үед солонгос хэлтэй зочдод Kakao Map, Naver Map, бусад зочдод Google Maps харуулна. Холбоос шинэ цонхонд нээгдэнэ.';
+$lang->lodging_map_services = 'Харуулах газрын зураг';
+$lang->lodging_map_auto = 'Автомат';
+$lang->lodging_map_multi = 'Олон газрын зураг';
+$lang->lodging_map_kakao = 'Kakao Map';
+$lang->lodging_map_naver = 'Naver Map';
+$lang->lodging_map_google = 'Google Maps';
+$lang->lodging_map_osm = 'OpenStreetMap';
+$lang->lodging_map_view = 'Газрын зураг харах';
+$lang->lodging_map_route = 'Чиглэл';

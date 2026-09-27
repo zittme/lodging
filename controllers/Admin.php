@@ -795,6 +795,39 @@ class Admin extends Base
 	}
 
 	/**
+	 * 지도 링크 설정 화면.
+	 */
+	public function dispLodgingAdminMap()
+	{
+		\Context::set('map_config', \Zittme\Modules\Lodging\Models\Map::config());
+		$this->setTemplateFile('map');
+	}
+
+	/**
+	 * 지도 링크 설정 저장.
+	 */
+	public function procLodgingAdminInsertMapConfig()
+	{
+		$mode = (string)\Context::get('map_mode');
+		$services = \Context::get('map_services');
+		$services = is_array($services) ? array_map('strval', $services) : [];
+
+		$config = \ModuleModel::getModuleConfig('lodging');
+		$config = is_object($config) ? $config : new \stdClass;
+		$config->map_mode = in_array($mode, \Zittme\Modules\Lodging\Models\Map::MODES, true) ? $mode : 'auto';
+		$config->map_services = array_values(array_intersect(\Zittme\Modules\Lodging\Models\Map::SERVICES, $services));
+
+		$output = \ModuleController::getInstance()->insertModuleConfig('lodging', $config);
+		if (!$output->toBool())
+		{
+			return $output;
+		}
+
+		$this->setMessage('success_updated');
+		$this->setRedirectUrl(getNotEncodedUrl('', 'module', '', 'mid', '', 'act', 'dispLodgingConsole', 'p', 'map'));
+	}
+
+	/**
 	 * 쿠폰 저장.
 	 */
 	public function procLodgingAdminInsertCoupon()

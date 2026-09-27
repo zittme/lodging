@@ -461,3 +461,17 @@ $lang->lodging_lang_empty = 'Henüz metin yok. Lütfen bir tane oluşturun.';
 $lang->lodging_lang_list_failed = 'Liste yüklenemedi.';
 $lang->lodging_lang_save_failed = 'Kaydedilemedi.';
 $lang->lodging_lang_empty_values = 'Metni en az bir dilde girin.';
+
+// Map links
+$lang->lodging_map_links = 'Harita bağlantıları';
+$lang->lodging_map_mode = 'Harita';
+$lang->about_lodging_map_mode = 'Otomatik seçenekte Korece ziyaretçiler Kakao Map ve Naver Map, diğerleri Google Haritalar’ı görür. Bağlantılar yeni pencerede açılır.';
+$lang->lodging_map_services = 'Gösterilecek haritalar';
+$lang->lodging_map_auto = 'Otomatik';
+$lang->lodging_map_multi = 'Birden çok harita';
+$lang->lodging_map_kakao = 'Kakao Map';
+$lang->lodging_map_naver = 'Naver Map';
+$lang->lodging_map_google = 'Google Haritalar';
+$lang->lodging_map_osm = 'OpenStreetMap';
+$lang->lodging_map_view = 'Haritayı gör';
+$lang->lodging_map_route = 'Yol tarifi';

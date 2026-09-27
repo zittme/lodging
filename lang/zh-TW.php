@@ -461,3 +461,17 @@ $lang->lodging_lang_empty = '還沒有文字，請新增一個。';
 $lang->lodging_lang_list_failed = '未能載入清單。';
 $lang->lodging_lang_save_failed = '儲存失敗。';
 $lang->lodging_lang_empty_values = '請至少輸入一種語言的文字。';
+
+// Map links
+$lang->lodging_map_links = '地圖連結';
+$lang->lodging_map_mode = '地圖';
+$lang->about_lodging_map_mode = '自動：韓語訪客顯示 Kakao 地圖與 Naver 地圖，其他語言訪客顯示 Google 地圖。連結會在新視窗開啟。';
+$lang->lodging_map_services = '顯示的地圖';
+$lang->lodging_map_auto = '自動';
+$lang->lodging_map_multi = '多個地圖';
+$lang->lodging_map_kakao = 'Kakao 地圖';
+$lang->lodging_map_naver = 'Naver 地圖';
+$lang->lodging_map_google = 'Google 地圖';
+$lang->lodging_map_osm = 'OpenStreetMap';
+$lang->lodging_map_view = '查看地圖';
+$lang->lodging_map_route = '路線';

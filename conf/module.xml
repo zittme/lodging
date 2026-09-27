@@ -65,6 +65,7 @@
 		<action name="procLodgingAdminSaveDay" class="Controllers\Admin" permission="manager" />
 		<action name="procLodgingAdminBooking" class="Controllers\Admin" permission="manager" />
 		<action name="procLodgingAdminSaveRooms" class="Controllers\Admin" permission="manager" />
+		<action name="procLodgingAdminInsertMapConfig" class="Controllers\Admin" permission="manager" />
 		<action name="procLodgingAdminInsertCoupon" class="Controllers\Admin" permission="manager" />
 		<action name="procLodgingAdminDeleteCoupon" class="Controllers\Admin" permission="manager" />
 		<action name="procLodgingAdminReviewReply" class="Controllers\Admin" permission="manager" />

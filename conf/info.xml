@@ -4,7 +4,7 @@
 	<title xml:lang="en">Lodging</title>
 	<description xml:lang="ko">호텔·모텔·펜션을 위한 숙박 예약 모듈입니다. 객실 타입별 재고와 요금 캘린더, 숙박·대실, 취소 규정, 숙박 검증 후기를 제공합니다. 선결제는 짓미페이와 연동되며 현장결제만으로도 운영할 수 있습니다.</description>
 	<description xml:lang="en">Accommodation booking for hotels, motels and pensions. Room-type inventory, rate calendar, overnight and day-use bookings, cancellation rules and verified reviews. Prepayment runs through Zittme Pay; on-site payment works without it.</description>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<date>2026-09-28</date>
 	<category>service</category>
 	<author email_address="zittme-contact@zzan.me" link="https://zitt.me">

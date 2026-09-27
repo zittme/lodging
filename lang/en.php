@@ -461,3 +461,17 @@ $lang->lodging_lang_empty = 'No phrases yet. Please create one.';
 $lang->lodging_lang_list_failed = 'The list could not be loaded.';
 $lang->lodging_lang_save_failed = 'Could not save.';
 $lang->lodging_lang_empty_values = 'Enter the phrase in at least one language.';
+
+// Map links
+$lang->lodging_map_links = 'Map links';
+$lang->lodging_map_mode = 'Map';
+$lang->about_lodging_map_mode = 'Auto shows Kakao Map and Naver Map to Korean visitors and Google Maps to everyone else. Links open in a new window.';
+$lang->lodging_map_services = 'Maps to show';
+$lang->lodging_map_auto = 'Auto';
+$lang->lodging_map_multi = 'Several maps';
+$lang->lodging_map_kakao = 'Kakao Map';
+$lang->lodging_map_naver = 'Naver Map';
+$lang->lodging_map_google = 'Google Maps';
+$lang->lodging_map_osm = 'OpenStreetMap';
+$lang->lodging_map_view = 'View map';
+$lang->lodging_map_route = 'Directions';

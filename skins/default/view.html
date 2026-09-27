@@ -13,6 +13,17 @@
 			@if($property->address)<span class="ldg-muted">{{ $property->address }} {{ $property->address_detail }}</span>@endif
 			@if($property->phone)<span class="ldg-muted">{{ $lang->lodging_phone }} {{ $property->phone }}</span>@endif
 		</p>
+		@if(!empty($map_links))
+		<ul class="ldg-maps">
+			@foreach($map_links as $ldg_map)
+			<li class="ldg-map-row">
+				<span class="ldg-map-name">{{ $ldg_map['name'] }}</span>
+				<a class="ldg-btn" href="{{ $ldg_map['view_url'] }}" target="_blank" rel="noopener" aria-label="{{ $ldg_map['name'] }} {{ $lang->lodging_map_view }}">{{ $lang->lodging_map_view }}</a>
+				<a class="ldg-btn ldg-btn-primary" href="{{ $ldg_map['route_url'] }}" target="_blank" rel="noopener" aria-label="{{ $ldg_map['name'] }} {{ $lang->lodging_map_route }}">{{ $lang->lodging_map_route }}</a>
+			</li>
+			@endforeach
+		</ul>
+		@endif
 		@if($property->summary)
 		<p class="ldg-desc">{{ $property->summary }}</p>
 		@endif

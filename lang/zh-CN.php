@@ -461,3 +461,17 @@ $lang->lodging_lang_empty = '还没有文本，请新建一个。';
 $lang->lodging_lang_list_failed = '未能加载列表。';
 $lang->lodging_lang_save_failed = '保存失败。';
 $lang->lodging_lang_empty_values = '请至少输入一种语言的文字。';
+
+// Map links
+$lang->lodging_map_links = '地图链接';
+$lang->lodging_map_mode = '地图';
+$lang->about_lodging_map_mode = '自动：韩语访客显示 Kakao 地图和 Naver 地图，其他语言访客显示 Google 地图。链接在新窗口中打开。';
+$lang->lodging_map_services = '显示的地图';
+$lang->lodging_map_auto = '自动';
+$lang->lodging_map_multi = '多个地图';
+$lang->lodging_map_kakao = 'Kakao 地图';
+$lang->lodging_map_naver = 'Naver 地图';
+$lang->lodging_map_google = 'Google 地图';
+$lang->lodging_map_osm = 'OpenStreetMap';
+$lang->lodging_map_view = '查看地图';
+$lang->lodging_map_route = '路线';
